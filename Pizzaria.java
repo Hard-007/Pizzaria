@@ -3,7 +3,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-import view.*;
+import src.main.java.view.*;
 
 public class Pizzaria extends JFrame{
     /*public Pizzaria(){

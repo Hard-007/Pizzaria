@@ -1,6 +1,6 @@
 //javac -cp C:\Users\Filipe\Desktop\Java\GUI\Pizzaria\ Pizzaria.java
 import src.java.views.*;
-import src.java.views.auth.*;
+//import src.java.views.auth.*;
 
 import java.io.IOException;
 import java.awt.*;

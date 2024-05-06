@@ -18,6 +18,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import src.java.views.auth.Auth;
 import src.resources.config.DBConnection;
 
 public class Home extends JFrame implements ActionListener{
@@ -128,23 +129,6 @@ public class Home extends JFrame implements ActionListener{
         homeJPanel.add(homeHeaderJPanel, BorderLayout.NORTH);
         homeJPanel.add(homeBodyJPanel, BorderLayout.CENTER);
         homeJPanel.add(homeLeftJPanel, BorderLayout.WEST);
-        
-        homeBodyJPanel.add(dashboardObj);
-        homeBodyJPanel.add(menuObj);
-        homeBodyJPanel.add(orderObj);
-        homeBodyJPanel.add(staffObj);
-        homeBodyJPanel.add(clientObj);
-        homeBodyJPanel.add(accountObj);
-        homeBodyJPanel.add(settingObj);
-        homeBodyJPanel.add(logsObj);
-
-        menuObj.setVisible(false);
-        orderObj.setVisible(false);
-        staffObj.setVisible(false);
-        clientObj.setVisible(false);
-        accountObj.setVisible(false);
-        settingObj.setVisible(false);
-        logsObj.setVisible(false);
 
         /*profile.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -182,8 +166,8 @@ public class Home extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){  
+
         if (e.getSource() == dashJButton) {
-            dashboardObj.setVisible(true);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
             staffObj.setVisible(false);
@@ -191,80 +175,120 @@ public class Home extends JFrame implements ActionListener{
             accountObj.setVisible(false);
             settingObj.setVisible(false);
             logsObj.setVisible(false);
+            
+            brandName.setText("Dashboard");
+            homeBodyJPanel.add(dashboardObj);
+            dashboardObj.setVisible(true);
+            revalidate();
+            repaint();
         }
         else if(e.getSource() == menuJButton){
-            menuObj.setVisible(true);
-            dashboardObj.setVisible(true);
+            dashboardObj.setVisible(false);
             orderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
             settingObj.setVisible(false);
             logsObj.setVisible(false);
+            
+            brandName.setText("Menu");
+            homeBodyJPanel.add(menuObj);
+            menuObj.setVisible(true);
+            revalidate();
+            repaint();
         }
         else if(e.getSource() == orderJButton){
-            orderObj.setVisible(true);
-            dashboardObj.setVisible(true);
+            dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
             settingObj.setVisible(false);
             logsObj.setVisible(false);
+            
+            brandName.setText("Order");
+            homeBodyJPanel.add(orderObj);
+            orderObj.setVisible(true);
+            revalidate();
+            repaint();
         }
         else if(e.getSource() == staffJButton){
-            staffObj.setVisible(true);
-            dashboardObj.setVisible(true);
+            dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
             settingObj.setVisible(false);
             logsObj.setVisible(false);
+            
+            brandName.setText("Staff");
+            homeBodyJPanel.add(staffObj);
+            staffObj.setVisible(true);
+            revalidate();
+            repaint();
         }
         else if(e.getSource() == clientJButton){
-            clientObj.setVisible(true);
-            dashboardObj.setVisible(true);
+            dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
             staffObj.setVisible(false);
             accountObj.setVisible(false);
             settingObj.setVisible(false);
             logsObj.setVisible(false);
+            
+            brandName.setText("Client");
+            homeBodyJPanel.add(clientObj);
+            clientObj.setVisible(true);
+            revalidate();
+            repaint();
         }
         else if(e.getSource() == accountJButton){
-            accountObj.setVisible(true);
-            dashboardObj.setVisible(true);
+            dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             settingObj.setVisible(false);
             logsObj.setVisible(false);
+            
+            brandName.setText("Account");
+            homeBodyJPanel.add(accountObj);
+            accountObj.setVisible(true);
+            revalidate();
+            repaint();
         }
         else if(e.getSource() == settingJButton){
-            settingObj.setVisible(true);
-            dashboardObj.setVisible(true);
+            dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
             logsObj.setVisible(false);
+
+            brandName.setText("Setting");
+            homeBodyJPanel.add(settingObj);
+            settingObj.setVisible(true);
+            revalidate();
+            repaint();
         }
         else if(e.getSource() == logsJButton){
-            logsObj.setVisible(true);
-            dashboardObj.setVisible(true);
+            dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
             settingObj.setVisible(false);
+            
+            brandName.setText("Logs");
+            homeBodyJPanel.add(logsObj);
+            logsObj.setVisible(true);
+            revalidate();
+            repaint();
         }
         else if(e.getSource() == exitJButton ){
             JOptionPane.showMessageDialog(homeJPanel, "Encerrando sessão...");
-			setVisible(false);
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
@@ -273,6 +297,10 @@ public class Home extends JFrame implements ActionListener{
             accountObj.setVisible(false);
             settingObj.setVisible(false);
             logsObj.setVisible(false);
+
+			setVisible(false);
+            new Auth().setVisible(true);
+            //System.exit(0);
         }
     }
 

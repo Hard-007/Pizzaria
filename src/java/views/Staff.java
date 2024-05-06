@@ -28,7 +28,7 @@ public class Staff extends JPanel{
 
 		ArrayList<String> funcArr = new ArrayList<String>();
 		int countFunc=0, lFunc=0;
-		try {
+		/*try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT * FROM users WHERE category = 'funcionario'");
@@ -43,7 +43,7 @@ public class Staff extends JPanel{
 		}
 		catch(SQLException exp) {
 			exp.printStackTrace();
-		}
+		}*/
         // Sample data for the table
         Object[][] dataFunc = new Object[countFunc][4];
 		for(int i=0; i<countFunc; i++){

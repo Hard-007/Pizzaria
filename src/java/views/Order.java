@@ -18,7 +18,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import src.resources.config.DBConnection;
+//import src.resources.config.DBConnection;
 
 public class Order extends JPanel{
     public Order(){
@@ -28,7 +28,7 @@ public class Order extends JPanel{
 
 		ArrayList<String> PedidoArr = new ArrayList<String>();
 		int countPedido=0, lPedido=0;
-		try {
+		/*try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT * FROM pedidos ");
@@ -42,7 +42,7 @@ public class Order extends JPanel{
 		}
 		catch(SQLException exp) {
 			exp.printStackTrace();
-		}
+		}*/
         // Sample data for the table
         Object[][] dataPedido = new Object[countPedido][3];
 		for(int i=0; i<countPedido; i++){

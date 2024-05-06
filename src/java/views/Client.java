@@ -28,7 +28,7 @@ public class Client extends JPanel{
 
 		ArrayList<String> ClieArr = new ArrayList<String>();
 		int countClie=0, lClie=0;
-		try {
+		/*try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT * FROM users WHERE category = 'user'");
@@ -43,7 +43,7 @@ public class Client extends JPanel{
 		}
 		catch(SQLException exp) {
 			exp.printStackTrace();
-		}
+		}*/
         // Sample data for the table
         Object[][] dataClie = new Object[countClie][4];
 		for(int i=0; i<countClie; i++){

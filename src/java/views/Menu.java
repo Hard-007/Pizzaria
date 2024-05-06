@@ -18,16 +18,15 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import src.resources.config.DBConnection;
+//import src.resources.config.DBConnection;
 
 public class Menu extends JPanel{
     public Menu(){
         JPanel Menu = new JPanel(new BorderLayout());
-		Menu.setPreferredSize(new Dimension(500, 60));
         
         ArrayList<String> pizzas = new ArrayList<String>();
 		int count=0, l=0;
-		/*try {
+		try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT * FROM pizza");
@@ -41,7 +40,7 @@ public class Menu extends JPanel{
 		}
 		catch(SQLException exp) {
 			exp.printStackTrace();
-		}*/
+		}
         // Sample data for the table
         Object[][] data = new Object[count][3];
 		for(int i=0; i<count; i++){
@@ -80,5 +79,45 @@ public class Menu extends JPanel{
 		AskPedidoBody.add(submitAskPizza);
 
 		Menu.add(AskPedidoBody, BorderLayout.SOUTH);
+
+		add(Menu);
     }
+
+	public class DBConnection {
+		public static String url;
+		public static String user;
+		public static String password;
+	
+		private static Connection connection;
+
+		static {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (Exception e) {}
+		}
+	
+		public static Connection getConexao() {
+	
+			System.out.print("\n\n Connected !");
+			
+			try {
+				if(connection == null) {
+					connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/indian ", "root", "");
+					return connection;
+				}
+				else {
+					return connection;
+				}
+			}/*  
+			catch(ClassNotFoundException cex){
+				cex.printStackTrace();
+				return null;
+			}*/
+			catch(SQLException e) {
+				e.printStackTrace();
+				return null;
+			}  
+		}
+		
+	}
 }

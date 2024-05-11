@@ -25,6 +25,6 @@ public class Logs extends JPanel{
         JPanel Logs = new JPanel(new BorderLayout());
 		Label logText = new Label("Historico de uso do sistema");
 		Logs.add(logText, BorderLayout.NORTH);
-        
+        add(Logs);
     }
 }

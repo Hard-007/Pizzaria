@@ -20,7 +20,7 @@ import javax.swing.*;
 
 import src.resources.config.DBConnection;
 
-public class Dashboard extends JPanel{
+public class Dashboard extends JPanel implements ActionListener{
 	JPanel dashJPanel;
 	JPanel dashHeaderJPanel;
 	JPanel dashBodyJPanel;
@@ -40,15 +40,16 @@ public class Dashboard extends JPanel{
 		dashBodyJPanel = new JPanel();
 		
 		actualizar = new JButton("Actualizar");
-		//actualizar.addActionListener(this);
+		actualizar.addActionListener(this);
 
-		nrPizzas = new Label(" 200 Pizzas ");
-		nrFuncionarios = new Label(" 4 Funcionarios ");
-		nrClientes = new Label(" 20 Clientes ");
-		nrPeddPendente = new Label(" 10 pedidos pendentes ");
-		nrPeddFeito = new Label(" 7 pedidos atendidos ");
+		nrPizzas = new Label(" Pizzas ");
+		nrFuncionarios = new Label("Funcionarios ");
+		nrClientes = new Label(" Clientes ");
+		nrPeddPendente = new Label(" Pedidos pendentes ");
+		nrPeddFeito = new Label(" Pedidos atendidos ");
 
 		dashPanel();
+		dashDados();
 
 		dashBodyJPanel.add(nrPizzas);
 		dashBodyJPanel.add(nrFuncionarios);
@@ -62,28 +63,6 @@ public class Dashboard extends JPanel{
 		dashJPanel.add(dashHeaderJPanel, BorderLayout.NORTH);
 		dashJPanel.add(dashBodyJPanel, BorderLayout.CENTER);
 		add(dashJPanel);
-		
-		actualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				
-				try {
-					Connection conn = DBConnection.getConexao();
-					Statement stmt = conn.createStatement();
-					ResultSet res = stmt.executeQuery("SELECT ( SELECT count(*) FROM pizza) AS p, (SELECT count(*) FROM pedidos) AS pdd, (SELECT count(*) FROM saidas) AS s, (SELECT count(*) FROM users WHERE category = 'funcionario') AS u");
-
-					while(res.next()){
-						nrPizzas.setText(" "+res.getInt("p")+" Pizzas");
-						nrPeddPendente.setText(" "+res.getInt("pdd")+" Pendentes");
-						nrPeddFeito.setText(" "+res.getInt("s")+" Feitos");
-						nrFuncionarios.setText(" "+res.getInt("u")+" Funcionarios");
-						System.out.println("updating");
-					}
-				}
-				catch(SQLException exp) {
-					exp.printStackTrace();
-				}
-			}
-		});
         
     }
 	public void dashPanel(){
@@ -110,28 +89,30 @@ public class Dashboard extends JPanel{
 		nrPeddFeito.setPreferredSize(new Dimension(200, 100));
 
 	}
-/* *
+	public void dashDados(){
+		try {
+			Connection conn = DBConnection.getConexao();
+			Statement stmt = conn.createStatement();
+			ResultSet res = stmt.executeQuery("SELECT ( SELECT count(*) FROM menu) AS p, (SELECT count(*) FROM pedido WHERE status='pendente') AS pdp, (SELECT count(*) FROM pedido WHERE status='atendido') AS pda, (SELECT count(*) FROM users WHERE category = 'staff') AS uf, (SELECT count(*) FROM users WHERE category = 'user') AS uc");
+
+			while(res.next()){
+				nrPizzas.setText(" "+res.getInt("p")+" Pizzas");
+				nrPeddPendente.setText(" "+res.getInt("pdp")+" Pedido pendentes");
+				nrPeddFeito.setText(" "+res.getInt("pda")+" Pedido atendidos ");
+				nrFuncionarios.setText(" "+res.getInt("uf")+" Funcionarios");
+				nrClientes.setText(" "+res.getInt("uc")+" Clientes");
+			}
+		}
+		catch(SQLException exp) {
+			exp.printStackTrace();
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == actualizar) {
-			
-			try {
-				Connection conn = DBConnection.getConexao();
-				Statement stmt = conn.createStatement();
-				ResultSet res = stmt.executeQuery("SELECT ( SELECT count(*) FROM pizza) AS p, (SELECT count(*) FROM pedidos) AS pdd, (SELECT count(*) FROM saidas) AS s, (SELECT count(*) FROM users WHERE category = 'funcionario') AS u");
-
-				while(res.next()){
-					nrPizzas.setText(" "+res.getInt("p")+" Pizzas");
-					nrPeddPendente.setText(" "+res.getInt("pdd")+" Pendentes");
-					nrPeddFeito.setText(" "+res.getInt("s")+" Feitos");
-					nrFuncionarios.setText(" "+res.getInt("u")+" Funcionarios");
-					System.out.println("updating");
-				}
-			}
-			catch(SQLException exp) {
-				exp.printStackTrace();
-			}
+			dashDados();
 		}
 	}
-	*/
+	
 }

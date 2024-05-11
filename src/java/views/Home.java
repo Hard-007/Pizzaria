@@ -25,6 +25,7 @@ public class Home extends JFrame implements ActionListener{
     Dashboard dashboardObj;
     Menu menuObj;
     Order orderObj;
+    MyOrder myOrderObj;
     Staff staffObj;
     Client clientObj;
     Account accountObj;
@@ -49,17 +50,26 @@ public class Home extends JFrame implements ActionListener{
     JButton dashJButton     ;
     JButton menuJButton     ;
     JButton orderJButton    ;
+    JButton myOrderJButton  ;
     JButton staffJButton    ;
     JButton clientJButton   ;
     JButton accountJButton  ; 
     JButton settingJButton  ; 
     JButton logsJButton     ;
     JButton exitJButton     ;
+
+    static String id_user;
+
+    public static String getUser(){
+        return id_user;
+    }
     
 	JButton addPizzaBtn = new JButton("Add Pizza");
     JButton askPedido = new JButton("Ver Pedido");
 
-    public Home(){
+    public Home(String accessLevel, String iduser){
+        id_user = iduser;
+
         setTitle("Pizzaria");
 		setSize(1024, 642);
         setLocationRelativeTo(null);
@@ -68,8 +78,9 @@ public class Home extends JFrame implements ActionListener{
 		setBackground(new Color(0xFFFFFF));
 
         dashboardObj = new Dashboard();
-        menuObj = new Menu();
+        menuObj = new Menu(accessLevel);
         orderObj = new Order();
+        myOrderObj = new MyOrder();
         staffObj = new Staff();
         clientObj = new Client();
         accountObj = new Account();
@@ -88,11 +99,12 @@ public class Home extends JFrame implements ActionListener{
         logoLabel.setIcon(logoResized);      
 
         brandName   = new JLabel("Home");
-        profile     = new JButton("User");
+        profile     = new JButton("null");
 
         dashJButton     = new JButton("Dashboard");
         menuJButton     = new JButton("Menu");
         orderJButton    = new JButton("Pedidos");
+        myOrderJButton  = new JButton("Meus pedidos");
         staffJButton    = new JButton("Funcionarios");
         clientJButton   = new JButton("Clientes");
         accountJButton  = new JButton("Conta");
@@ -102,6 +114,7 @@ public class Home extends JFrame implements ActionListener{
         dashJButton     .addActionListener(this);  
         menuJButton     .addActionListener(this);
         orderJButton    .addActionListener(this);
+        myOrderJButton  .addActionListener(this);
         staffJButton    .addActionListener(this);
         clientJButton   .addActionListener(this);
         accountJButton  .addActionListener(this);
@@ -111,6 +124,7 @@ public class Home extends JFrame implements ActionListener{
         homeLeftJPanel.add(dashJButton);
         homeLeftJPanel.add(menuJButton);
         homeLeftJPanel.add(orderJButton);
+        homeLeftJPanel.add(myOrderJButton);
         homeLeftJPanel.add(staffJButton);
         homeLeftJPanel.add(clientJButton);
         homeLeftJPanel.add(accountJButton);
@@ -122,8 +136,28 @@ public class Home extends JFrame implements ActionListener{
 
         homeHeader();
         JPanel aside = new JPanel();
-        aside.setBackground(Color.RED);
         add(aside, BorderLayout.WEST);
+
+        if (accessLevel.equals("admin")){
+            aside.setBackground(Color.RED);
+            profile.setText("Admin");
+        }
+        else if (accessLevel.equals("staff")){
+            aside.setBackground(Color.YELLOW);
+            profile.setText("Staff");
+            staffJButton.setVisible(false);
+            clientJButton.setVisible(false);
+            logsJButton.setVisible(false);
+        }
+        else if (accessLevel.equals("user")){
+            aside.setBackground(Color.GREEN);
+            profile.setText("User");
+            dashJButton.setVisible(false); 
+            orderJButton.setVisible(false); 
+            staffJButton.setVisible(false);
+            clientJButton.setVisible(false);
+            logsJButton.setVisible(false);
+        }
 
         add(homeJPanel);
         homeJPanel.add(homeHeaderJPanel, BorderLayout.NORTH);
@@ -170,6 +204,7 @@ public class Home extends JFrame implements ActionListener{
         if (e.getSource() == dashJButton) {
             menuObj.setVisible(false);
             orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
@@ -185,6 +220,7 @@ public class Home extends JFrame implements ActionListener{
         else if(e.getSource() == menuJButton){
             dashboardObj.setVisible(false);
             orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
@@ -200,6 +236,7 @@ public class Home extends JFrame implements ActionListener{
         else if(e.getSource() == orderJButton){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
+            myOrderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
@@ -212,10 +249,27 @@ public class Home extends JFrame implements ActionListener{
             revalidate();
             repaint();
         }
+        else if(e.getSource() == myOrderJButton){
+            dashboardObj.setVisible(false);
+            menuObj.setVisible(false);
+            orderObj.setVisible(false);
+            staffObj.setVisible(false);
+            clientObj.setVisible(false);
+            accountObj.setVisible(false);
+            settingObj.setVisible(false);
+            logsObj.setVisible(false);
+            
+            brandName.setText("My Order");
+            myOrderObj.setVisible(false);
+            homeBodyJPanel.add(orderObj);
+            revalidate();
+            repaint();
+        }
         else if(e.getSource() == staffJButton){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
             settingObj.setVisible(false);
@@ -231,6 +285,7 @@ public class Home extends JFrame implements ActionListener{
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
             staffObj.setVisible(false);
             accountObj.setVisible(false);
             settingObj.setVisible(false);
@@ -246,6 +301,7 @@ public class Home extends JFrame implements ActionListener{
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             settingObj.setVisible(false);
@@ -261,6 +317,7 @@ public class Home extends JFrame implements ActionListener{
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
@@ -276,6 +333,7 @@ public class Home extends JFrame implements ActionListener{
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);
@@ -292,6 +350,7 @@ public class Home extends JFrame implements ActionListener{
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
             accountObj.setVisible(false);

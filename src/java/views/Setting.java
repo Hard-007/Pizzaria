@@ -25,5 +25,7 @@ public class Setting extends JPanel{
         JPanel Setting = new JPanel(new BorderLayout());
 		Label settingText = new Label("Definicoes");
 		Setting.add(settingText, BorderLayout.NORTH);
+
+        add(Setting);
     }
 }

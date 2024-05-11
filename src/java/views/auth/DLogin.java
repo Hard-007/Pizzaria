@@ -1,9 +1,24 @@
 package src.java.views.auth;
 
+import src.java.views.Home;
+
+import java.io.IOException;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import java.util.ArrayList;
+
+import java.net.*;
+import java.net.URL.*;
+
+import java.sql.*;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 import src.resources.config.DBConnection;
 
@@ -25,6 +40,9 @@ public class DLogin extends JPanel implements ActionListener{
 
     JButton lgButton;
 
+	public JLabel UserLvl = new JLabel("null");
+    public JLabel UserId = new JLabel("null");
+
     public DLogin(){
         /*setTitle("Pizzaria");
 		setSize(1024, 642);
@@ -40,8 +58,8 @@ public class DLogin extends JPanel implements ActionListener{
         passwordDiv = new JPanel();
 
         authTitle       = new JLabel("  Entrar");
-        userLabel       = new JLabel("  Usuário:");
-        ipLabel         = new JLabel("            IP:");
+        userLabel       = new JLabel("   Usuário:");
+        ipLabel         = new JLabel("             IP:");
         passwordLabel   = new JLabel("Password:");
 
         
@@ -94,20 +112,8 @@ public class DLogin extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == lgButton) {
-            System.out.println("login");
-        }
-    }
-
-   /*public static void main(String[] args){
-        new DLogin().setVisible(true);
-    }*/
-
-}
-/*
- * 
-
-            String name = lgUser.getText();
-			String password = String.valueOf(lgPwd.getPassword());
+            String name = user.getText();
+			String passwd = String.valueOf(password.getPassword());
 			int count=0;
 			String sql = "SELECT * FROM users WHERE username= ? AND password = ?";
 			PreparedStatement ps = null;
@@ -118,11 +124,12 @@ public class DLogin extends JPanel implements ActionListener{
 				//ResultSet res = stmt.executeQuery("SELECT * FROM users WHERE username='"+name+"' AND password='"+password+"'");
 				ps = conn.prepareStatement(sql);
         		ps.setString(1, name);
-        		ps.setString(2, password);
+        		ps.setString(2, passwd);
         		res = ps.executeQuery();
 				
 				while(res.next()){
 					count++;
+                    UserId.setText(res.getString("id"));
 					UserLvl.setText(res.getString("category"));
 				}
 			}
@@ -131,47 +138,21 @@ public class DLogin extends JPanel implements ActionListener{
 			}
 			if (count > 0 && count <2) {
 				try {
-					if(!(InetAddress.getByName(ipAdd.getText()).isReachable(2000))){
+					if(!(InetAddress.getByName(ip.getText()).isReachable(2000))){
 						JOptionPane.showMessageDialog(null, "IP inacessível ");
 					}else{
 						JOptionPane.showMessageDialog(null, "Bem vindo "+UserLvl.getText());
 						if (UserLvl.getText().equals("admin")) {
-							brandName.setText("Dashboard");
+							new Home(UserLvl.getText(), UserId.getText()).setVisible(true);
 						}
-						else{
-							brandName.setText("Menu");
+						else if (UserLvl.getText().equals("staff")) {
+							//setVisible(false);
+							new Home(UserLvl.getText(), UserId.getText()).setVisible(true);
 						}
-						profile.setText(UserLvl.getText());
-					
-						if (UserLvl.getText().equals("user")) {
-							aside.setBackground(Color.GREEN);
-							dash.setVisible(false);
-							pedido.setVisible(false);
-							func.setVisible(false);
-							cliente.setVisible(false);
-							logs.setVisible(false);
-							Home.remove(Dash);
-							Home.add(Menu, BorderLayout.CENTER);
-							System.out.println("Home");
+						else if (UserLvl.getText().equals("user")) {
+							//setVisible(false);
+							new Home(UserLvl.getText(), UserId.getText()).setVisible(true);
 						}
-						else if (UserLvl.getText().equals("func")) {
-							aside.setBackground(Color.ORANGE);
-							func.setVisible(false);
-							cliente.setVisible(false);
-							logs.setVisible(false);
-						}
-						else{
-							System.out.println("Default");
-							Home.remove(Menu);
-							Home.add(Dash, BorderLayout.CENTER);
-						}
-					
-						AuthMainPanel.setVisible(false);
-						add(Home);
-						HomeHeader.add(logoLabel, BorderLayout.WEST);
-        				HomeHeader.add(brandName, BorderLayout.CENTER);
-        				HomeHeader.add(profile, BorderLayout.EAST);
-						Home.setVisible(true);
 					}
 				}catch(IOException ex) {
                     System.out.println("Excepção");
@@ -181,5 +162,11 @@ public class DLogin extends JPanel implements ActionListener{
 			else {
 				JOptionPane.showMessageDialog(null, "Verifique as credenciais", "Erro de autenticacao", JOptionPane.ERROR_MESSAGE);
 			}
+        }
+    }
 
- */
+   /*public static void main(String[] args){
+        new DLogin().setVisible(true);
+    }*/
+
+}

@@ -25,5 +25,6 @@ public class Account extends JPanel{
         JPanel Conta = new JPanel(new BorderLayout());
 		Label contaText = new Label("Detalhes da conta");
 		Conta.add(contaText, BorderLayout.NORTH);
+        add(Conta);
     }
 }

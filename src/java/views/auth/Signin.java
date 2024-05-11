@@ -1,9 +1,22 @@
 package src.java.views.auth;
 
+import java.io.IOException;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+import java.util.ArrayList;
+
+import java.net.*;
+import java.net.URL.*;
+
+import java.sql.*;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 import src.resources.config.DBConnection;
 
@@ -127,25 +140,13 @@ public class Signin extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == sgButton){
-            System.out.println("sign");
-        }
-    }
+            String username = user.getText();
+            String name = nome.getText();
+            String surname = apelido.getText();
+            String semail = email.getText();
+            String contact = contacto.getText();
+            String pass = String.valueOf(password.getPassword());
 
-   /*public static void main(String[] args){
-        new Signin().setVisible(true);
-    }*/
-
-}
-
-/*
- * 
- * 
- *          String username = sgUser.getText();
-			String name = sgNome.getText();
-			String surname = sgApelido.getText();
-			String email = sgEmail.getText();
-			String contacto = sgContacto.getText();
-			String password = String.valueOf(sgPwd.getPassword());
 			String sql = "INSERT INTO users (username, nome, apelido, email, contacto, password, category) VALUES (?, ?, ?, ?, ?, ?, 'user')";
 			
 			PreparedStatement ps = null;
@@ -154,9 +155,9 @@ public class Signin extends JPanel implements ActionListener{
 				ps.setString(1, username);
 				ps.setString(2, name);
 				ps.setString(3, surname);
-				ps.setString(4, email);
-				ps.setString(5, contacto);
-				ps.setString(6, password);
+				ps.setString(4, semail);
+				ps.setString(5, contact);
+				ps.setString(6, pass);
 				ps.execute();
 				ps.close();
 			}
@@ -164,9 +165,12 @@ public class Signin extends JPanel implements ActionListener{
 				ex.printStackTrace();
 			}
 			JOptionPane.showMessageDialog(signinPanel, "Cadastro sucedido, faça login");
-			signinPanel.setVisible(false);
-			loginPanel.setVisible(true);
-			////loginpanel2.setVisible(true);
- * 
- * 
- */
+			
+        }
+    }
+
+   /*public static void main(String[] args){
+        new Signin().setVisible(true);
+    }*/
+
+}

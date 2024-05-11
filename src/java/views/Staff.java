@@ -28,10 +28,10 @@ public class Staff extends JPanel{
 
 		ArrayList<String> funcArr = new ArrayList<String>();
 		int countFunc=0, lFunc=0;
-		/*try {
+		try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM users WHERE category = 'funcionario'");
+			ResultSet res = stmt.executeQuery("SELECT * FROM users WHERE category = 'staff'");
 			
 			while(res.next()){
 				countFunc++;
@@ -43,7 +43,7 @@ public class Staff extends JPanel{
 		}
 		catch(SQLException exp) {
 			exp.printStackTrace();
-		}*/
+		}
         // Sample data for the table
         Object[][] dataFunc = new Object[countFunc][4];
 		for(int i=0; i<countFunc; i++){
@@ -61,5 +61,7 @@ public class Staff extends JPanel{
         // Add the table to a scroll pane
         JScrollPane scrollPaneFunc = new JScrollPane(tableFunc);
         Func.add(scrollPaneFunc, BorderLayout.CENTER);
+
+		add(Func);
     }
 }

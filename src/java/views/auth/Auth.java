@@ -35,13 +35,22 @@ public class Auth extends JFrame implements ActionListener{
     
     JButton authOptions;
 
+    ImageIcon ico = new ImageIcon("src/resources/assets/pizza-ico.jpg");
     ImageIcon img;
     ImageIcon imgResized;
     ImageIcon logoImg;
     ImageIcon logoResized;
+
+    JButton lgButton;
     
     Image imgResize;
     Image logoResize;
+
+    static int offOn = 1;
+
+    public void onOff(int onoff){
+        offOn = onoff;
+    }
 
     public Auth(){
         setTitle("Pizzaria");
@@ -50,19 +59,28 @@ public class Auth extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setBackground(new Color(0xFFFFFF));
+        setIconImage(ico.getImage());
+
+        if (offOn == 0) {
+            setVisible(false);
+            System.out.println(offOn);
+        }
+
+        lg = new DLogin();
+        sg = new Signin();
 
         AuthHeader      = new JPanel(new BorderLayout());
         AuthMainPanel   = new JPanel(new BorderLayout());
         AuthPanel       = new JPanel(new GridBagLayout());
 
         imgLabel    = new JLabel();
-        img         = new ImageIcon("../assets/pizza.jpg");
+        img         = new ImageIcon("src/resources/assets/pizza.jpg");
         imgResize   = img.getImage().getScaledInstance(512, 642, Image.SCALE_SMOOTH);
         imgResized  = new ImageIcon(imgResize);
         imgLabel.setIcon(imgResized);
 
         logoLabel   = new JLabel();
-        logoImg     = new ImageIcon("../assets/logo.jpg");
+        logoImg     = new ImageIcon("src/resources/assets/logo.jpg");
         logoResize  = logoImg.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         logoResized = new ImageIcon(logoResize);
 
@@ -79,11 +97,12 @@ public class Auth extends JFrame implements ActionListener{
         AuthMainPanel.add(imgLabel, BorderLayout.WEST);
         AuthMainPanel.add(AuthPanel, BorderLayout.CENTER);
 
-        lg = new DLogin();
-        sg = new Signin();
         sg.setVisible(false);
         AuthPanel.add(lg);
         AuthPanel.add(sg);
+
+        lgButton = new JButton();
+        lgButton.addActionListener(this);
 
         authOptions.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -126,7 +145,6 @@ public class Auth extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
-        
     }
 
     /*public static void main(String[] args) {

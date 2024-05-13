@@ -30,11 +30,12 @@ public class Menu extends JPanel implements ActionListener{
 
 	ArrayList<String> pizzas;
 	Object[][] data;
-	int count=0, l=0;
+	int count, l=0;
 
 	JButton actualizar;
 	JButton verPizza;
 	JButton addPizza;
+	JButton editPizza;
 
 
 
@@ -57,6 +58,8 @@ public class Menu extends JPanel implements ActionListener{
 	JButton submitAskPizza;
 
     public Menu(String accessLevel){
+		pizzas = new ArrayList<String>();
+
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
 		menuBodyJPanel = new JPanel();
@@ -90,22 +93,24 @@ public class Menu extends JPanel implements ActionListener{
 
 		verPizza = new JButton("Ver pizza");
 		addPizza = new JButton("Adicionar Pizza");
+		editPizza = new JButton("Editar Pizza");
         verPizza.addActionListener(this);
 		addPizza.addActionListener(this);
+		editPizza.addActionListener(this);
 
 		if (accessLevel.equals("user")) {
 			verPizza.setVisible(false);
 			addPizza.setVisible(false);
+			editPizza.setVisible(false);
 		}
-
-        pizzas = new ArrayList<String>();
 		
 		menuDados();
         
         // Column names id	nome	tamanhoP	preco	categoria	
-        String[] columnNames = {"Nr", "ID", "Nome", "Tamanho", "Preco", "Categoria"};
+        String[] columnNames = {"#", "ID", "Nome", "Tamanho", "Preco", "Categoria"};
         // Create a DefaultTableModel and set the data and column names
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
+		model.fireTableStructureChanged();
         // Create JTable using the model
         JTable table = new JTable(model);
         // Add the table to a scroll pane
@@ -131,6 +136,7 @@ public class Menu extends JPanel implements ActionListener{
 		menuHeaderJPanel.add(actualizar);
 		menuHeaderJPanel.add(verPizza);
 		menuHeaderJPanel.add(addPizza);
+		menuHeaderJPanel.add(editPizza);
         menuBodyJPanel.add(scrollPane);
 		menuFooterJPanel.add(AskPedidoBody);
 
@@ -145,27 +151,27 @@ public class Menu extends JPanel implements ActionListener{
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT * FROM menu");
+			count=0;
 			
 			while(res.next()){
 				count++;
-				pizzas.add(" "+count+1);
+				pizzas.add(" "+count);
 				pizzas.add(res.getString("id"));
 				pizzas.add(res.getString("nome"));
 				pizzas.add(res.getString("tamanho"));
 				pizzas.add(res.getString("preco"));
 				pizzas.add(res.getString("categoria"));
 			}
+			data = new Object[count][6];
+			for(int i=0; i<count; i++){
+				for(int j=0; j<6; j++){
+					data[i][j] = pizzas.get(l);
+					l++;
+				}
+			}
 		}
 		catch(SQLException exp) {
 			exp.printStackTrace();
-		}
-		// Sample data for the table
-        data = new Object[count][6];
-		for(int i=0; i<count; i++){
-			for(int j=0; j<6; j++){
-				data[i][j] = pizzas.get(l);
-				l++;
-			}
 		}
 	}
 

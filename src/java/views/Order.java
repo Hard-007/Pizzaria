@@ -46,17 +46,18 @@ public class Order extends JPanel implements ActionListener{
 		orderDados();
 
         // Sample data for the table
-        dataPedido = new Object[countPedido][9];
+        dataPedido = new Object[countPedido][10];
 		for(int i=0; i<countPedido; i++){
-			for(int j=0; j<9; j++){
+			for(int j=0; j<10; j++){
 				dataPedido[i][j] = PedidoArr.get(lPedido);
 				lPedido++;
 			}
 		}
         // Column names
-        String[] columnNamesPedido = {"Nr", "ID", "ID Cliente", "Nome", "Tamanho", "Preco", "Quantidade", "Status", "Data"};
+        String[] columnNamesPedido = {"#", "ID", "ID Cliente", "Nome Cliente", "Nome Pedido", "Tamanho", "Preco", "Quantidade", "Status", "Data"};
         // Create a DefaultTableModel and set the data and column names
         DefaultTableModel modelPedido = new DefaultTableModel(dataPedido, columnNamesPedido);
+		modelPedido.fireTableStructureChanged();
         // Create JTable using the model
         JTable tablePedido = new JTable(modelPedido);
         // Add the table to a scroll pane
@@ -81,7 +82,7 @@ public class Order extends JPanel implements ActionListener{
 
 			while(res.next()){
 				countPedido++;
-				PedidoArr.add(" "+countPedido+1);
+				PedidoArr.add(" "+countPedido);
 				PedidoArr.add(res.getString("id"));
 				PedidoArr.add(res.getString("id_user"));
 				PedidoArr.add(res.getString("nomeU"));

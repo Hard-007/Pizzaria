@@ -23,8 +23,7 @@ import src.resources.config.DBConnection;
 public class Staff extends JPanel{
     public Staff(){
         JPanel Func = new JPanel(new BorderLayout());
-		Label funcText = new Label("Funcionarios");
-		Func.add(funcText, BorderLayout.NORTH);
+
 
 		ArrayList<String> funcArr = new ArrayList<String>();
 		int countFunc=0, lFunc=0;

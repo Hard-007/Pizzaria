@@ -21,87 +21,223 @@ import javax.swing.*;
 import src.resources.config.DBConnection;
 
 public class Order extends JPanel implements ActionListener{
-	JPanel orderJPanel;
-	JPanel orderHeaderJPanel;
-	JPanel orderBodyJPanel;
-	JPanel orderFooterJPanel;
+	JPanel menuJPanel;
+	JPanel menuHeaderJPanel;
+	JPanel menuBodyJPanel;
+	JPanel menuFooterJPanel;
 
-	ArrayList<String> PedidoArr;
-	Object[][] dataPedido;
-	int countPedido=0, lPedido=0;
+	JPanel addPizzaJPanel;
+
+	ImageIcon OcardImgIcon;
+	Image OcardImgResize;
+	ImageIcon OcardImgResized;
+	JLabel OcardImgJLabel[];
+	JPanel cardJPanel[];
+	JTextArea cardJLabel[];
+	JButton cardJButton[];
+	JPanel cardBtnsJPanel[];
+
+	ArrayList<String> pizzas;
+	Object[][] data;
+	int count, l=0;
 
 	JButton actualizar;
+	JButton verPizza;
+	JButton addPizza;
+	JButton editPizza;
 
-    public Order(){
-        orderJPanel = new JPanel(new BorderLayout());
-		orderHeaderJPanel = new JPanel();
-		orderBodyJPanel = new JPanel();
-		orderFooterJPanel = new JPanel();
+
+
+	JLabel nomJLabel;
+	JTextField nomJTextField ;
+	JLabel tamJLabel ;
+	JTextField tamJTextField ;
+	JLabel precJLabel ;
+	JTextField precJTextField ;
+	JLabel catJLabel;
+	JTextField catJTextField;
+	JButton addPizzJButton;
+
+
+	JPanel AskPedidoBody ;
+	JLabel askPizzaIdL ;
+	JTextField askPizzaId ;
+	JLabel askPizzaQuantL ;
+	JTextField askPizzaQuant ;
+	JButton submitAskPizza;
+
+	JScrollPane scrollPane;
+
+    public Order(String accessLevel){
+		pizzas = new ArrayList<String>();
+		cardJPanel = new JPanel[100];
+		cardJLabel = new JTextArea[100];
+		cardImgJLabel= new JLabel[100];
+		cardJButton = new JButton[100];
+		cardBtnsJPanel = new JPanel[100];
+
+
+        OcardImgIcon		= new ImageIcon("/src/resources/assets/pizza.jpg");
+        OcardImgResize 	= cardImgIcon.getImage().getScaledInstance(200, 160, Image.SCALE_SMOOTH);
+        OcardImgResized	= new ImageIcon(cardImgResize);
+
+        menuJPanel = new JPanel(new BorderLayout());
+		menuHeaderJPanel = new JPanel();
+		menuBodyJPanel = new JPanel(new FlowLayout());
+		menuBodyJPanel.setPreferredSize(new Dimension(830, 3000));
+		menuFooterJPanel = new JPanel();
+
+		scrollPane = new JScrollPane(menuBodyJPanel);
+        scrollPane.setPreferredSize(new Dimension(860, 470));
+
+		addPizzaJPanel = new JPanel();
+		nomJLabel = new JLabel("Nome");
+		nomJTextField = new JTextField(10);
+		tamJLabel = new JLabel("Tamanho");
+		tamJTextField = new JTextField(10);
+		precJLabel = new JLabel("Preco");
+		precJTextField = new JTextField(10);
+		catJLabel = new JLabel("Categoria");
+		catJTextField = new JTextField(10);
+		addPizzJButton = new JButton("Adicionar");
+		addPizzJButton.addActionListener(this);
+
+		addPizzaJPanel.add(nomJLabel);
+		addPizzaJPanel.add(nomJTextField);
+		addPizzaJPanel.add(tamJLabel);
+		addPizzaJPanel.add(tamJTextField);
+		addPizzaJPanel.add(precJLabel);
+		addPizzaJPanel.add(precJTextField);
+		addPizzaJPanel.add(catJLabel);
+		addPizzaJPanel.add(catJTextField);
+		addPizzaJPanel.add(addPizzJButton);
 
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
 
-		PedidoArr = new ArrayList<String>();
+		verPizza = new JButton("Ver pizza");
+		addPizza = new JButton("Adicionar Pizza");
+		editPizza = new JButton("Editar Pizza");
+        verPizza.addActionListener(this);
+		addPizza.addActionListener(this);
+		editPizza.addActionListener(this);
 
-		orderDados();
-
-        // Sample data for the table
-        dataPedido = new Object[countPedido][10];
-		for(int i=0; i<countPedido; i++){
-			for(int j=0; j<10; j++){
-				dataPedido[i][j] = PedidoArr.get(lPedido);
-				lPedido++;
-			}
+		if (accessLevel.equals("user")) {
+			verPizza.setVisible(false);
+			addPizza.setVisible(false);
+			editPizza.setVisible(false);
 		}
-        // Column names
-        String[] columnNamesPedido = {"#", "ID", "ID Cliente", "Nome Cliente", "Nome Pedido", "Tamanho", "Preco", "Quantidade", "Status", "Data"};
-        // Create a DefaultTableModel and set the data and column names
-        DefaultTableModel modelPedido = new DefaultTableModel(dataPedido, columnNamesPedido);
-		modelPedido.fireTableStructureChanged();
-        // Create JTable using the model
-        JTable tablePedido = new JTable(modelPedido);
-        // Add the table to a scroll pane
-        JScrollPane scrollPanePedido = new JScrollPane(tablePedido);
+		
+		menuDados();
+		
+		menuHeaderJPanel.setBackground(new Color(0x123456));
+		menuHeaderJPanel.add(actualizar);
+		//menuHeaderJPanel.add(verPizza);
+		//menuHeaderJPanel.add(addPizza);
+		//menuHeaderJPanel.add(editPizza);
+        //menuBodyJPanel.add(scrollPane);
 
-		orderHeaderJPanel.setBackground(new Color(0x123456));
-		orderHeaderJPanel.add(actualizar);
-        orderBodyJPanel.add(scrollPanePedido);
-		//orderFooterJPanel.add();
+		menuJPanel.add(menuHeaderJPanel, BorderLayout.NORTH);
+		menuJPanel.add(scrollPane, BorderLayout.CENTER);
+		menuJPanel.add(menuFooterJPanel, BorderLayout.SOUTH);
 
-		orderJPanel.add(orderHeaderJPanel, BorderLayout.NORTH);
-		orderJPanel.add(orderBodyJPanel, BorderLayout.CENTER);
-		orderJPanel.add(orderFooterJPanel, BorderLayout.SOUTH);
-
-		add(orderJPanel);
+		add(menuJPanel);
     }
-	public void orderDados(){
+	public void menuDados(){
 		try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT pedido.id AS id, pedido.nome AS nomeP, pedido.tamanho AS tam, pedido.preco AS preco, pedido.quantidade AS quant, pedido.status AS stt, pedido.created_at AS crea, users.id AS id_user, users.nome AS nomeU FROM pedido JOIN users ON pedido.id_user=users.id ");
-
+			count=0;
+			
 			while(res.next()){
-				countPedido++;
-				PedidoArr.add(" "+countPedido);
-				PedidoArr.add(res.getString("id"));
-				PedidoArr.add(res.getString("id_user"));
-				PedidoArr.add(res.getString("nomeU"));
-				PedidoArr.add(res.getString("nomeP"));
-				PedidoArr.add(res.getString("tam"));
-				PedidoArr.add(res.getString("preco"));
-				PedidoArr.add(res.getString("quant"));
-				PedidoArr.add(res.getString("stt"));
-				PedidoArr.add(res.getString("crea"));
+				count++;
+
+				cardJPanel[count] = new JPanel(new BorderLayout());
+				cardImgJLabel[count] = new JLabel();
+				cardJLabel[count] = new JTextArea();
+				cardJButton[count] = new JButton("Atender");
+				cardBtnsJPanel[count] = new JPanel();
+
+				cardJLabel[count].setText("   ID: "+res.getString("id")+"\n   ID_user: "+res.getString("id_user")+"\n   Nome Usuario: "+res.getString("nomeU")+"\n   Nome Pizza: "+res.getString("nomeP")+"\n   Tamanho: "+res.getString("tam")+"\n   Preco: "+res.getString("preco")+"\n   Quantidade: "+res.getString("quant")+"\n   Status: "+res.getString("stt")+"\n   Crono: "+res.getString("crea")+"\n   Total: "+(res.getInt("preco")*res.getInt("quant"))+",00 MZN");
+				cardJLabel[count].setOpaque(true);
+				//cardJLabel[count].setBackground(new Color(0x444444));
+				//cardJLabel[count].setForeground(new Color(0xFFFFFF));
+				cardJLabel[count].setFont(new Font("Dialog", Font.BOLD, 14));
+				//cardJLabel[count].setHorizontalAlignment(SwingConstants.CENTER);
+				
+				cardJLabel[count].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+				cardJLabel[count].setEditable(false);
+        		cardJLabel[count].setFocusable(false);  
+        		cardJLabel[count].setWrapStyleWord(true); 
+        		cardJLabel[count].setLineWrap(true);
+        		cardJLabel[count].setBorder(BorderFactory.createEmptyBorder());
+
+				cardJButton[count].addActionListener(this);
+				cardBtnsJPanel[count].add(cardJButton[count]);
+				cardBtnsJPanel[count].setBackground(new Color(0xFFFFFF));
+
+				cardJPanel[count].setPreferredSize(new Dimension(200, 210));
+				cardJPanel[count].setBackground(new Color(0x444444));
+				cardImgJLabel[count].setIcon(cardImgResized);
+
+				cardJPanel[count].add(cardImgJLabel[count], BorderLayout.NORTH);
+				cardJPanel[count].add(cardJLabel[count], BorderLayout.CENTER);
+				cardJPanel[count].add(cardBtnsJPanel[count], BorderLayout.SOUTH);
+				menuBodyJPanel.add(cardJPanel[count]);
+				revalidate();
+				repaint();
 			}
 		}
 		catch(SQLException exp) {
 			exp.printStackTrace();
 		}
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == actualizar) {
-			orderDados();
+			menuDados();
+		}
+		else if(e.getSource() == verPizza){
+			menuBodyJPanel.setVisible(true);
+			scrollPane.setVisible(true);
+			menuFooterJPanel.setVisible(true);
+			revalidate();
+			repaint();
+			menuJPanel.add(menuBodyJPanel, BorderLayout.CENTER);
+		}
+		else if(e.getSource() == addPizza){
+			menuBodyJPanel.setVisible(false);
+			scrollPane.setVisible(false);
+			menuFooterJPanel.setVisible(false);
+			revalidate();
+			repaint();
+			menuJPanel.add(addPizzaJPanel, BorderLayout.CENTER);
+		}
+		else{
+			for(int i = 0; i<100; i++){
+				if (e.getSource() == cardJButton[i]) {
+					String Pid = ""+i;
+					String stts = "Atendido";
+				
+					String sql = "UPDATE pedido SET status = ? WHERE id = ?";
+
+					PreparedStatement ps = null;
+					try {
+						ps = DBConnection.getConexao().prepareStatement(sql);
+						ps.setString(1, stts);
+						ps.setString(2, Pid);
+						ps.execute();
+						ps.close();
+					}
+					catch(SQLException ex) {
+						ex.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido atendido");
+				}
+			}
 		}
 	}
+
 }

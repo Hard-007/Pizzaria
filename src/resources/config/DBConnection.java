@@ -20,7 +20,7 @@ public class DBConnection {
 		
 		try {
 			if(connection == null) {
-				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/indian", "root", "");
+				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/pizza", "root", "");
 				return connection;
 			}
 			else {

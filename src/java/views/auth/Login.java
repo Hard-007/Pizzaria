@@ -22,7 +22,7 @@ import javax.swing.*;
 
 import src.resources.config.DBConnection;
 
-public class DLogin extends JPanel implements ActionListener{
+public class Login extends JPanel implements ActionListener{
     GridBagConstraints constraints;
 
     JPanel loginPanel   ;
@@ -43,7 +43,7 @@ public class DLogin extends JPanel implements ActionListener{
 	public JLabel UserLvl = new JLabel("null");
     public JLabel UserId = new JLabel("null");
 
-    public DLogin(){
+    public Login(){
         /*setTitle("Pizzaria");
 		setSize(1024, 642);
         setLocationRelativeTo(null);

@@ -21,8 +21,8 @@ import javax.swing.*;
 import src.resources.config.DBConnection;
 
 
-public class Auth extends JFrame implements ActionListener{
-    DLogin lg;
+public class Auth extends JPanel implements ActionListener{
+    Login lg;
     Signin sg;
 
     JPanel AuthMainPanel;
@@ -53,20 +53,21 @@ public class Auth extends JFrame implements ActionListener{
     }
 
     public Auth(){
-        setTitle("Pizzaria");
+        /*setTitle("Pizzaria");
+        setIconImage(ico.getImage());
 		setSize(1024, 642);
         setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(1024, 642));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
 		setLayout(new BorderLayout());
 		setBackground(new Color(0xFFFFFF));
-        setIconImage(ico.getImage());
 
         if (offOn == 0) {
             setVisible(false);
             System.out.println(offOn);
         }
 
-        lg = new DLogin();
+        lg = new Login();
         sg = new Signin();
 
         AuthHeader      = new JPanel(new BorderLayout());
@@ -83,11 +84,11 @@ public class Auth extends JFrame implements ActionListener{
         logoImg     = new ImageIcon("src/resources/assets/logo.jpg");
         logoResize  = logoImg.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         logoResized = new ImageIcon(logoResize);
+        logoLabel.setIcon(logoResized);
 
         brandName   = new JLabel("M GRILL");
         authOptions = new JButton("Cadastrar");
 
-        logoLabel.setIcon(logoResized);
         AuthPanel.setBackground(new Color(0xFFFFFF));      
 
         authHeader();

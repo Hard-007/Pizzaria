@@ -28,6 +28,17 @@ public class Menu extends JPanel implements ActionListener{
 
 	JPanel addPizzaJPanel;
 
+	ImageIcon cardImgIcon;
+	Image cardImgResize;
+	ImageIcon cardImgResized;
+	JLabel cardImgJLabel[];
+	JPanel cardJPanel[];
+	JTextArea cardJLabel[];
+	JButton cardJButton[];
+	SpinnerModel spinnerModel[];
+	JSpinner spinner[];
+	JPanel cardBtnsJPanel[];
+
 	ArrayList<String> pizzas;
 	Object[][] data;
 	int count, l=0;
@@ -57,16 +68,33 @@ public class Menu extends JPanel implements ActionListener{
 	JTextField askPizzaQuant ;
 	JButton submitAskPizza;
 
+	JScrollPane scrollPane;
+
     public Menu(String accessLevel){
 		pizzas = new ArrayList<String>();
+		cardJPanel = new JPanel[100];
+		cardJLabel = new JTextArea[100];
+		cardImgJLabel= new JLabel[100];
+		cardJButton = new JButton[100];
+		spinnerModel = new SpinnerNumberModel[100];
+		spinner = new JSpinner[100];
+		cardBtnsJPanel = new JPanel[100];
+
+
+        cardImgIcon		= new ImageIcon("src/resources/assets/pizza-ico.png");
+        cardImgResize 	= cardImgIcon.getImage().getScaledInstance(200, 160, Image.SCALE_SMOOTH);
+        cardImgResized	= new ImageIcon(cardImgResize);
 
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
-		menuBodyJPanel = new JPanel();
+		menuBodyJPanel = new JPanel(new FlowLayout());
+		menuBodyJPanel.setPreferredSize(new Dimension(830, 3000));
 		menuFooterJPanel = new JPanel();
 
-		addPizzaJPanel = new JPanel();
+		scrollPane = new JScrollPane(menuBodyJPanel);
+        scrollPane.setPreferredSize(new Dimension(860, 470));
 
+		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
 		nomJTextField = new JTextField(10);
 		tamJLabel = new JLabel("Tamanho");
@@ -105,43 +133,16 @@ public class Menu extends JPanel implements ActionListener{
 		}
 		
 		menuDados();
-        
-        // Column names id	nome	tamanhoP	preco	categoria	
-        String[] columnNames = {"#", "ID", "Nome", "Tamanho", "Preco", "Categoria"};
-        // Create a DefaultTableModel and set the data and column names
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-		model.fireTableStructureChanged();
-        // Create JTable using the model
-        JTable table = new JTable(model);
-        // Add the table to a scroll pane
-        JScrollPane scrollPane = new JScrollPane(table);
-		
-		
-        AskPedidoBody = new JPanel();
-		
-		askPizzaIdL = new JLabel("ID");
-		askPizzaId = new JTextField(10);
-		askPizzaQuantL = new JLabel("Quantidade");
-		askPizzaQuant = new JTextField(10);
-		submitAskPizza = new JButton("Adicionar Pedido");
-		submitAskPizza.addActionListener(this);
-
-		AskPedidoBody.add(askPizzaIdL);
-		AskPedidoBody.add(askPizzaId);
-		AskPedidoBody.add(askPizzaQuantL);
-		AskPedidoBody.add(askPizzaQuant);
-		AskPedidoBody.add(submitAskPizza);
 		
 		menuHeaderJPanel.setBackground(new Color(0x123456));
 		menuHeaderJPanel.add(actualizar);
 		menuHeaderJPanel.add(verPizza);
 		menuHeaderJPanel.add(addPizza);
 		menuHeaderJPanel.add(editPizza);
-        menuBodyJPanel.add(scrollPane);
-		menuFooterJPanel.add(AskPedidoBody);
+        //menuBodyJPanel.add(scrollPane);
 
 		menuJPanel.add(menuHeaderJPanel, BorderLayout.NORTH);
-		menuJPanel.add(menuBodyJPanel, BorderLayout.CENTER);
+		menuJPanel.add(scrollPane, BorderLayout.CENTER);
 		menuJPanel.add(menuFooterJPanel, BorderLayout.SOUTH);
 
 		add(menuJPanel);
@@ -155,19 +156,43 @@ public class Menu extends JPanel implements ActionListener{
 			
 			while(res.next()){
 				count++;
-				pizzas.add(" "+count);
-				pizzas.add(res.getString("id"));
-				pizzas.add(res.getString("nome"));
-				pizzas.add(res.getString("tamanho"));
-				pizzas.add(res.getString("preco"));
-				pizzas.add(res.getString("categoria"));
-			}
-			data = new Object[count][6];
-			for(int i=0; i<count; i++){
-				for(int j=0; j<6; j++){
-					data[i][j] = pizzas.get(l);
-					l++;
-				}
+
+				cardJPanel[count] = new JPanel(new BorderLayout());
+				cardImgJLabel[count] = new JLabel();
+				cardJLabel[count] = new JTextArea();
+				spinnerModel[count] = new SpinnerNumberModel(0, 0, 100, 1);
+				spinner[count] = new JSpinner(spinnerModel[count]);
+				cardJButton[count] = new JButton("Pedir");
+				cardBtnsJPanel[count] = new JPanel();
+
+				cardJLabel[count].setText("   ID: "+res.getString("id")+"\n   Nome: "+res.getString("nome")+"\n   Tamanho: "+res.getString("tamanho")+"\n   Categoria: "+res.getString("categoria")+"\n   Preco: "+res.getString("preco"));
+				cardJLabel[count].setOpaque(true);
+				//cardJLabel[count].setBackground(new Color(0x444444));
+				//cardJLabel[count].setForeground(new Color(0xFFFFFF));
+				cardJLabel[count].setFont(new Font("Dialog", Font.BOLD, 14));
+				//cardJLabel[count].setHorizontalAlignment(SwingConstants.CENTER);
+				
+				cardJLabel[count].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+				cardJLabel[count].setEditable(false);
+        		cardJLabel[count].setFocusable(false);  
+        		cardJLabel[count].setWrapStyleWord(true); 
+        		cardJLabel[count].setLineWrap(true);
+        		cardJLabel[count].setBorder(BorderFactory.createEmptyBorder());
+
+				cardJButton[count].addActionListener(this);
+				cardBtnsJPanel[count].add(spinner[count]);
+				cardBtnsJPanel[count].add(cardJButton[count]);
+				cardBtnsJPanel[count].setBackground(new Color(0xFFFFFF));
+
+				cardJPanel[count].setBackground(new Color(0x444444));
+				cardImgJLabel[count].setIcon(cardImgResized);
+
+				cardJPanel[count].add(cardImgJLabel[count], BorderLayout.NORTH);
+				cardJPanel[count].add(cardJLabel[count], BorderLayout.CENTER);
+				cardJPanel[count].add(cardBtnsJPanel[count], BorderLayout.SOUTH);
+				menuBodyJPanel.add(cardJPanel[count]);
+				revalidate();
+				repaint();
 			}
 		}
 		catch(SQLException exp) {
@@ -180,55 +205,21 @@ public class Menu extends JPanel implements ActionListener{
 		if (e.getSource() == actualizar) {
 			menuDados();
 		}
-		else if(e.getSource() == submitAskPizza){
-			String Pid = askPizzaId.getText();
-			String Pquant = askPizzaQuant.getText();
-			String stts = "Pendente";
-			String nomeP = null;
-			String tamP = null;
-			String preP = null;
-
-			try{
-			Connection conn = DBConnection.getConexao();
-			Statement stmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM menu WHERE id='"+Pid+"' ");
-			while(res.next()){
-				nomeP = res.getString("nome");
-				tamP = res.getString("tamanho");
-				preP = res.getString("preco");
-			}
-			}
-			catch(SQLException se){
-
-			}
-
-			String sql = "INSERT INTO pedido (id_user, nome, tamanho, preco, quantidade, status) VALUES (?, ?, ?, ?, ?, ?)";
-			
-			PreparedStatement ps = null;
-			try {
-				ps = DBConnection.getConexao().prepareStatement(sql);
-				ps.setString(1, Home.getUser());
-				ps.setString(2, nomeP);
-				ps.setString(3, tamP);
-				ps.setString(4, preP);
-				ps.setString(5, Pquant);
-				ps.setString(6, stts);
-				ps.execute();
-				ps.close();
-			}
-			catch(SQLException ex) {
-				ex.printStackTrace();
-			}
-			JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido adicionada");
-		}
 		else if(e.getSource() == verPizza){
+			menuHeaderJPanel.setVisible(false);
 			menuBodyJPanel.setVisible(true);
+			scrollPane.setVisible(true);
 			menuFooterJPanel.setVisible(true);
-			menuJPanel.add(menuBodyJPanel, BorderLayout.CENTER);
+			revalidate();
+			repaint();
+			menuJPanel.add(scrollPane, BorderLayout.CENTER);
 		}
 		else if(e.getSource() == addPizza){
 			menuBodyJPanel.setVisible(false);
+			scrollPane.setVisible(false);
 			menuFooterJPanel.setVisible(false);
+			revalidate();
+			repaint();
 			menuJPanel.add(addPizzaJPanel, BorderLayout.CENTER);
 		}
 		else if(e.getSource() == addPizzJButton){
@@ -255,6 +246,63 @@ public class Menu extends JPanel implements ActionListener{
 			}
 			JOptionPane.showMessageDialog(addPizzaJPanel, "Pizza adicionada");
 		}
+		else{
+			for(int i = 0; i<100; i++){
+				if (e.getSource() == cardJButton[i]) {
+					String Pid = ""+i;
+					String Pquant = ""+(Integer) spinner[i].getValue();
+					String stts = "Pendente";
+					String nomeP = null;
+					String tamP = null;
+					String preP = null;
+
+					try{
+					Connection conn = DBConnection.getConexao();
+					Statement stmt = conn.createStatement();
+					ResultSet res = stmt.executeQuery("SELECT * FROM menu WHERE id='"+Pid+"' ");
+					while(res.next()){
+						nomeP = res.getString("nome");
+						tamP = res.getString("tamanho");
+						preP = res.getString("preco");
+					}
+					}
+					catch(SQLException se){
+					
+					}
+				
+					String sql = "INSERT INTO pedido (id_user, nome, tamanho, preco, quantidade, status) VALUES (?, ?, ?, ?, ?, ?)";
+
+					PreparedStatement ps = null;
+					try {
+						ps = DBConnection.getConexao().prepareStatement(sql);
+						ps.setString(1, Home.getUser());
+						ps.setString(2, nomeP);
+						ps.setString(3, tamP);
+						ps.setString(4, preP);
+						ps.setString(5, Pquant);
+						ps.setString(6, stts);
+						ps.execute();
+						ps.close();
+					}
+					catch(SQLException ex) {
+						ex.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido adicionado");
+				}
+			}
+		}
 	}
 
 }
+
+/*
+ * 
+ * 
+ JEditorPane editorPane = new JEditorPane();
+editorPane.setContentType("text/html");
+editorPane.setText("<html> <head><style>body{font-family: forte; color:red;}</style></head> <body> This is a <b>bold</b> word <br/> and <i>italic</i> word.</body></html>");
+editorPane.setEditable(false); // Make non-editable if needed.
+editorPane.setFont(new Font("Dialog", Font.BOLD, 14));
+ *
+ * 
+ */

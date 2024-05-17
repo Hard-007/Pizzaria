@@ -1,6 +1,6 @@
 //javac -cp C:\Users\Filipe\Desktop\Java\GUI\Pizzaria;. Pizzaria.java
 //java -cp C:\Users\Filipe\Desktop\Java\GUI\Pizzaria\src\resources\config\mysql-connector-j-8.3.0.jar;. Pizzaria.java
-///import src.java.views.*;
+import src.java.views.*;
 import src.java.views.auth.*;
 
 import java.io.IOException;
@@ -33,10 +33,10 @@ public class Pizzaria extends JFrame{
 		setLayout(new BorderLayout());
 		setBackground(new Color(0xFFFFFF));
         
-        add(new Auth(), BorderLayout.CENTER);
+        //add(new Auth());
     }*/
     
     public static void main(String[] args) {
-        new Auth().setVisible(true);
+        new Home("admin", "1").setVisible(true);
     }
 }

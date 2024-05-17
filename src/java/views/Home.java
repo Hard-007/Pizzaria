@@ -79,10 +79,10 @@ public class Home extends JFrame implements ActionListener{
 
         dashboardObj = new Dashboard();
         menuObj = new Menu(accessLevel);
-        orderObj = new Order();
-        myOrderObj = new MyOrder();
-        staffObj = new Staff();
-        clientObj = new Client();
+        orderObj = new Order(accessLevel);
+        myOrderObj = new MyOrder(accessLevel);
+        staffObj = new Staff(accessLevel);
+        clientObj = new Client(accessLevel);
         accountObj = new Account();
         settingObj = new Setting();
         logsObj = new Logs();
@@ -260,8 +260,8 @@ public class Home extends JFrame implements ActionListener{
             logsObj.setVisible(false);
             
             brandName.setText("My Order");
-            myOrderObj.setVisible(false);
-            homeBodyJPanel.add(orderObj);
+            homeBodyJPanel.add(myOrderObj);
+            myOrderObj.setVisible(true);
             revalidate();
             repaint();
         }

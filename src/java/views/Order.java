@@ -14,9 +14,8 @@ import java.net.URL.*;
 
 import java.sql.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
 
 import src.resources.config.DBConnection;
 
@@ -28,10 +27,10 @@ public class Order extends JPanel implements ActionListener{
 
 	JPanel addPizzaJPanel;
 
-	ImageIcon OcardImgIcon;
-	Image OcardImgResize;
-	ImageIcon OcardImgResized;
-	JLabel OcardImgJLabel[];
+	Image pddcardImgIcon;
+	Image pddcardImgResize;
+	ImageIcon pddcardImgResized;
+	JLabel pddcardImgJLabel[];
 	JPanel cardJPanel[];
 	JTextArea cardJLabel[];
 	JButton cardJButton[];
@@ -72,14 +71,23 @@ public class Order extends JPanel implements ActionListener{
 		pizzas = new ArrayList<String>();
 		cardJPanel = new JPanel[100];
 		cardJLabel = new JTextArea[100];
-		cardImgJLabel= new JLabel[100];
+		pddcardImgJLabel= new JLabel[100];
 		cardJButton = new JButton[100];
 		cardBtnsJPanel = new JPanel[100];
 
 
-        OcardImgIcon		= new ImageIcon("/src/resources/assets/pizza.jpg");
-        OcardImgResize 	= cardImgIcon.getImage().getScaledInstance(200, 160, Image.SCALE_SMOOTH);
-        OcardImgResized	= new ImageIcon(cardImgResize);
+		try (InputStream is = Order.class.getResourceAsStream("/src/resources/assets/order.png")) {
+			if (is != null) {
+				pddcardImgIcon		= ImageIO.read(is);
+        		pddcardImgResize 	= pddcardImgIcon.getScaledInstance(200, 160, Image.SCALE_SMOOTH);
+        		pddcardImgResized	= new ImageIcon(pddcardImgResize);
+			} else {
+				System.out.println("Imagem não pôde ser encontrada.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Erro ao carregar a imagem.");
+		}
 
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
@@ -142,6 +150,20 @@ public class Order extends JPanel implements ActionListener{
 		menuJPanel.add(menuFooterJPanel, BorderLayout.SOUTH);
 
 		add(menuJPanel);
+
+		/*Thread verificaDados = new Thread(() -> {
+			while (true) {
+				try {
+					Thread.sleep(5000); 
+					menuDados();
+					System.out.println("Verificando Pedidos");
+					//notify();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		verificaDados.start();*/
     }
 	public void menuDados(){
 		try {
@@ -154,7 +176,7 @@ public class Order extends JPanel implements ActionListener{
 				count++;
 
 				cardJPanel[count] = new JPanel(new BorderLayout());
-				cardImgJLabel[count] = new JLabel();
+				pddcardImgJLabel[count] = new JLabel();
 				cardJLabel[count] = new JTextArea();
 				cardJButton[count] = new JButton("Atender");
 				cardBtnsJPanel[count] = new JPanel();
@@ -177,11 +199,11 @@ public class Order extends JPanel implements ActionListener{
 				cardBtnsJPanel[count].add(cardJButton[count]);
 				cardBtnsJPanel[count].setBackground(new Color(0xFFFFFF));
 
-				cardJPanel[count].setPreferredSize(new Dimension(200, 210));
+				cardJPanel[count].setPreferredSize(new Dimension(200, 390));
 				cardJPanel[count].setBackground(new Color(0x444444));
-				cardImgJLabel[count].setIcon(cardImgResized);
+				pddcardImgJLabel[count].setIcon(pddcardImgResized);
 
-				cardJPanel[count].add(cardImgJLabel[count], BorderLayout.NORTH);
+				cardJPanel[count].add(pddcardImgJLabel[count], BorderLayout.NORTH);
 				cardJPanel[count].add(cardJLabel[count], BorderLayout.CENTER);
 				cardJPanel[count].add(cardBtnsJPanel[count], BorderLayout.SOUTH);
 				menuBodyJPanel.add(cardJPanel[count]);

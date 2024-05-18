@@ -73,6 +73,19 @@ public class Dashboard extends JPanel implements ActionListener{
 		dashJPanel.add(scrollPane, BorderLayout.CENTER);
 		add(dashJPanel);
         
+		/*Thread verificaDados = new Thread(() -> {
+			while (true) {
+				try {
+					Thread.sleep(5000); 
+					dashDados();
+					System.out.println("Verificando Dashboard");
+					//notify();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		verificaDados.start();*/
     }
 	public void dashPanel(){
 
@@ -121,7 +134,7 @@ public class Dashboard extends JPanel implements ActionListener{
 			ResultSet res = stmt.executeQuery("SELECT (SELECT sum(preco * quantidade) FROM pedido) AS lucro, ( SELECT count(*) FROM menu) AS p, (SELECT count(*) FROM pedido WHERE status='pendente') AS pdp, (SELECT count(*) FROM pedido WHERE status='atendido') AS pda, (SELECT count(*) FROM users WHERE category = 'staff') AS uf, (SELECT count(*) FROM users WHERE category = 'user') AS uc");
 
 			while(res.next()){
-				nrLucro.setText("Ganho "+res.getInt("lucro")+",00 MZN");
+				nrLucro.setText("Ganho\n "+res.getInt("lucro")+",00 MZN");
 				nrPizzas.setText(" "+res.getInt("p")+" Pizzas");
 				nrPeddPendente.setText(" "+res.getInt("pdp")+" Pedido pendentes");
 				nrPeddFeito.setText(" "+res.getInt("pda")+" Pedido atendidos ");

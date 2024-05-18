@@ -37,6 +37,8 @@ public class Pizzaria extends JFrame{
     }*/
     
     public static void main(String[] args) {
-        new Home("admin", "1").setVisible(true);
+        SwingUtilities.invokeLater(()->{
+            new Home("admin", "1").setVisible(true);
+        });
     }
 }

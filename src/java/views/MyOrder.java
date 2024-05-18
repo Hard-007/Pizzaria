@@ -28,10 +28,10 @@ public class MyOrder extends JPanel implements ActionListener{
 
 	JPanel addPizzaJPanel;
 
-	ImageIcon cardImgIcon;
-	Image cardImgResize;
-	ImageIcon cardImgResized;
-	JLabel cardImgJLabel[];
+	ImageIcon pdcardImgIcon;
+	Image pdcardImgResize;
+	ImageIcon pdcardImgResized;
+	JLabel pdcardImgJLabel[];
 	JPanel cardJPanel[];
 	JTextArea cardJLabel[];
 	//JButton cardJButton[];
@@ -72,14 +72,14 @@ public class MyOrder extends JPanel implements ActionListener{
 		pizzas = new ArrayList<String>();
 		cardJPanel = new JPanel[100];
 		cardJLabel = new JTextArea[100];
-		cardImgJLabel= new JLabel[100];
+		pdcardImgJLabel= new JLabel[100];
 		//cardJButton = new JButton[100];
 		cardBtnsJPanel = new JPanel[100];
 
 
-        cardImgIcon		= new ImageIcon("/src/resources/assets/myorder.png");
-        cardImgResize 	= cardImgIcon.getImage().getScaledInstance(200, 160, Image.SCALE_SMOOTH);
-        cardImgResized	= new ImageIcon(cardImgResize);
+        pdcardImgIcon		= new ImageIcon("/src/resources/assets/myorder.png");
+        pdcardImgResize 	= pdcardImgIcon.getImage().getScaledInstance(200, 160, Image.SCALE_SMOOTH);
+        pdcardImgResized	= new ImageIcon(pdcardImgResize);
 
         myOrderJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
@@ -120,19 +120,32 @@ public class MyOrder extends JPanel implements ActionListener{
 		myOrderJPanel.add(menuFooterJPanel, BorderLayout.SOUTH);
 
 		add(myOrderJPanel);
+
+		/*Thread verificaDados = new Thread(() -> {
+			while (true) {
+				try {
+					Thread.sleep(5000); 
+					menuDados();
+					System.out.println("Verificando Meus Pedidos");
+					//notify();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		verificaDados.start();*/
     }
 	public void menuDados(){
 		try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT * FROM pedido WHERE id_user='"+Home.getUser()+"' ");
-			count=0;
 			
 			while(res.next()){
 				count++;
 
 				cardJPanel[count] = new JPanel(new BorderLayout());
-				cardImgJLabel[count] = new JLabel();
+				pdcardImgJLabel[count] = new JLabel();
 				cardJLabel[count] = new JTextArea();
 				cardBtnsJPanel[count] = new JPanel();
 
@@ -155,9 +168,9 @@ public class MyOrder extends JPanel implements ActionListener{
 
 				cardJPanel[count].setPreferredSize(new Dimension(200, 200));
 				cardJPanel[count].setBackground(new Color(0x444444));
-				cardImgJLabel[count].setIcon(cardImgResized);
+				pdcardImgJLabel[count].setIcon(pdcardImgResized);
 
-				cardJPanel[count].add(cardImgJLabel[count], BorderLayout.NORTH);
+				cardJPanel[count].add(pdcardImgJLabel[count], BorderLayout.NORTH);
 				cardJPanel[count].add(cardJLabel[count], BorderLayout.CENTER);
 				cardJPanel[count].add(cardBtnsJPanel[count], BorderLayout.SOUTH);
 				menuBodyJPanel.add(cardJPanel[count]);

@@ -79,7 +79,7 @@ public class Staff extends JPanel implements ActionListener{
 		cardBtnsJPanel = new JPanel[100];
 
 
-        cardImgIcon		= new ImageIcon("src/resources/assets/staff-icon.png");
+        cardImgIcon		= new ImageIcon("src/resources/assets/staff-icon.jpg");
         cardImgResize 	= cardImgIcon.getImage().getScaledInstance(240, 180, Image.SCALE_SMOOTH);
         cardImgResized	= new ImageIcon(cardImgResize);
 
@@ -120,9 +120,9 @@ public class Staff extends JPanel implements ActionListener{
 		verPizza = new JButton("Ver pizza");
 		addPizza = new JButton("Adicionar Pizza");
 		editPizza = new JButton("Editar Pizza");
-        verPizza.addActionListener(this);
-		addPizza.addActionListener(this);
-		editPizza.addActionListener(this);
+        //verPizza.addActionListener(this);
+		//addPizza.addActionListener(this);
+		//editPizza.addActionListener(this);
 
 		if (accessLevel.equals("user")) {
 			verPizza.setVisible(false);

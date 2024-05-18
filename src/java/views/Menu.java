@@ -92,7 +92,8 @@ public class Menu extends JPanel implements ActionListener{
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
-        scrollPane.setPreferredSize(new Dimension(860, 470));
+		scrollPane.setBorder(null);
+        scrollPane.setPreferredSize(new Dimension(895, 515));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
@@ -105,16 +106,6 @@ public class Menu extends JPanel implements ActionListener{
 		catJTextField = new JTextField(10);
 		addPizzJButton = new JButton("Adicionar");
 		addPizzJButton.addActionListener(this);
-
-		addPizzaJPanel.add(nomJLabel);
-		addPizzaJPanel.add(nomJTextField);
-		addPizzaJPanel.add(tamJLabel);
-		addPizzaJPanel.add(tamJTextField);
-		addPizzaJPanel.add(precJLabel);
-		addPizzaJPanel.add(precJTextField);
-		addPizzaJPanel.add(catJLabel);
-		addPizzaJPanel.add(catJTextField);
-		addPizzaJPanel.add(addPizzJButton);
 
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
@@ -146,6 +137,20 @@ public class Menu extends JPanel implements ActionListener{
 		menuJPanel.add(menuFooterJPanel, BorderLayout.SOUTH);
 
 		add(menuJPanel);
+
+		/*Thread verificaDados = new Thread(() -> {
+			while (true) {
+				try {
+					Thread.sleep(5000); 
+					menuDados();
+					System.out.println("Verificando Menu");
+					//notify();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		verificaDados.start();*/
     }
 	public void menuDados(){
 		try {
@@ -215,12 +220,44 @@ public class Menu extends JPanel implements ActionListener{
 			menuJPanel.add(scrollPane, BorderLayout.CENTER);
 		}
 		else if(e.getSource() == addPizza){
-			menuBodyJPanel.setVisible(false);
+			/*menuBodyJPanel.setVisible(false);
 			scrollPane.setVisible(false);
 			menuFooterJPanel.setVisible(false);
 			revalidate();
 			repaint();
-			menuJPanel.add(addPizzaJPanel, BorderLayout.CENTER);
+			menuJPanel.add(addPizzaJPanel, BorderLayout.CENTER);*/
+			 // Create the modal dialog
+			JDialog modalDialog = new JDialog();
+			modalDialog.setTitle("Modal Dialog");
+			modalDialog.setModal(true);
+			modalDialog.setSize(300, 200);
+			modalDialog.setUndecorated(true);
+			modalDialog.setLayout(new FlowLayout());
+			// Add components to the dialog
+			modalDialog.add(nomJLabel);
+			modalDialog.add(nomJTextField);
+			modalDialog.add(tamJLabel);
+			modalDialog.add(tamJTextField);
+			modalDialog.add(precJLabel);
+			modalDialog.add(precJTextField);
+			modalDialog.add(catJLabel);
+			modalDialog.add(catJTextField);
+			modalDialog.add(addPizzJButton);
+
+			JButton closeButton = new JButton("Close");
+			closeButton.addActionListener(new ActionListener() {
+				 @Override
+				 public void actionPerformed(ActionEvent e) {
+					 modalDialog.dispose();
+				 }
+			 });
+			 modalDialog.add(closeButton);
+
+			 // Set the location of the dialog relative to the main frame
+			 modalDialog.setLocationRelativeTo(menuJPanel);
+
+			 // Display the dialog
+			 modalDialog.setVisible(true);
 		}
 		else if(e.getSource() == addPizzJButton){
 			System.out.println("pressed");

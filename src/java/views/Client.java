@@ -120,9 +120,9 @@ public class Client extends JPanel implements ActionListener{
 		verPizza = new JButton("Ver pizza");
 		addPizza = new JButton("Adicionar Pizza");
 		editPizza = new JButton("Editar Pizza");
-        verPizza.addActionListener(this);
-		addPizza.addActionListener(this);
-		editPizza.addActionListener(this);
+        //verPizza.addActionListener(this);
+		//addPizza.addActionListener(this);
+		//editPizza.addActionListener(this);
 
 		if (accessLevel.equals("user")) {
 			verPizza.setVisible(false);

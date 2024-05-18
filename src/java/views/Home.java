@@ -70,6 +70,8 @@ public class Home extends JFrame implements ActionListener{
     public Home(String accessLevel, String iduser){
         id_user = iduser;
 
+        setUndecorated(true);
+
         setTitle("Pizzaria");
 		setSize(1024, 642);
         setLocationRelativeTo(null);
@@ -141,22 +143,31 @@ public class Home extends JFrame implements ActionListener{
         if (accessLevel.equals("admin")){
             aside.setBackground(Color.RED);
             profile.setText("Admin");
+            brandName.setText("Dashboard");
+            homeBodyJPanel.add(dashboardObj);
+            dashboardObj.setVisible(true);
         }
         else if (accessLevel.equals("staff")){
             aside.setBackground(Color.YELLOW);
             profile.setText("Staff");
+            brandName.setText("Dashboard");
             staffJButton.setVisible(false);
             clientJButton.setVisible(false);
             logsJButton.setVisible(false);
+            homeBodyJPanel.add(dashboardObj);
+            dashboardObj.setVisible(true);
         }
         else if (accessLevel.equals("user")){
             aside.setBackground(Color.GREEN);
             profile.setText("User");
+            brandName.setText("Menu");
             dashJButton.setVisible(false); 
             orderJButton.setVisible(false); 
             staffJButton.setVisible(false);
             clientJButton.setVisible(false);
             logsJButton.setVisible(false);
+            homeBodyJPanel.add(menuObj);
+            menuObj.setVisible(true);
         }
 
         add(homeJPanel);

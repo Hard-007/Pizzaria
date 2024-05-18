@@ -21,7 +21,7 @@ import javax.swing.*;
 import src.resources.config.DBConnection;
 
 
-public class Auth extends JPanel implements ActionListener{
+public class Auth extends JFrame implements ActionListener{
     Login lg;
     Signin sg;
 
@@ -53,12 +53,12 @@ public class Auth extends JPanel implements ActionListener{
     }
 
     public Auth(){
-        /*setTitle("Pizzaria");
+        setTitle("Pizzaria");
         setIconImage(ico.getImage());
 		setSize(1024, 642);
         setLocationRelativeTo(null);
-        setPreferredSize(new Dimension(1024, 642));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+        //setPreferredSize(new Dimension(1024, 642));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setBackground(new Color(0xFFFFFF));
 
@@ -150,6 +150,8 @@ public class Auth extends JPanel implements ActionListener{
 
     /*public static void main(String[] args) {
         new Auth().setVisible(true);
+
+        try .dispose() to close after login
     }*/
     
 }

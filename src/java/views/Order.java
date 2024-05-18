@@ -75,7 +75,6 @@ public class Order extends JPanel implements ActionListener{
 		cardJButton = new JButton[100];
 		cardBtnsJPanel = new JPanel[100];
 
-
 		try (InputStream is = Order.class.getResourceAsStream("/src/resources/assets/order.png")) {
 			if (is != null) {
 				pddcardImgIcon		= ImageIO.read(is);

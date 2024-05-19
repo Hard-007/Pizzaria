@@ -232,7 +232,7 @@ public class Profile extends JPanel implements ActionListener{
 				cardBottomBtnsJPanel = new JPanel();
 				cardAllBtnsJPanel = new JPanel(new BorderLayout());
 
-				cardJLabel.setText("   ID: "+res.getString("id")+"\n   Username: "+res.getString("username")+"\n   Nome: "+res.getString("nome")+"\n   Apelido: "+res.getString("apelido")+"\n   Email: "+res.getString("email")+"\n   Contacto: "+res.getString("contacto")+"\n   Password: "+res.getString("password")+"\n   Categoria: "+res.getString("category")+"\n   Crono: "+res.getString("create_date"));
+				cardJLabel.setText("   ID: "+res.getString("id")+"\n   Username: "+res.getString("username")+"\n   Nome: "+res.getString("nome")+"   Apelido: "+res.getString("apelido")+"\n   Email: "+res.getString("email")+"   Contacto: "+res.getString("contacto")+"\n   Password: "+res.getString("password")+"   Categoria: "+res.getString("category")+"\n   Crono: "+res.getString("create_date"));
 				cardJLabel.setOpaque(true);
 				//cardJLabel.setBackground(new Color(0x444444));
 				//cardJLabel.setForeground(new Color(0xFFFFFF));
@@ -257,7 +257,7 @@ public class Profile extends JPanel implements ActionListener{
 				cardAllBtnsJPanel.add(cardBottomBtnsJPanel, BorderLayout.SOUTH);
 				cardBottomBtnsJPanel.setBackground(new Color(0xFFFFFF));
 
-				cardJPanel.add(pddcardImgJLabel, BorderLayout.NORTH);
+				cardJPanel.add(pddcardImgJLabel, BorderLayout.WEST);
 				cardJPanel.add(cardJLabel, BorderLayout.CENTER);
 				cardJPanel.add(cardAllBtnsJPanel, BorderLayout.SOUTH);
 				menuBodyJPanel.add(cardJPanel);

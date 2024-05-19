@@ -406,22 +406,13 @@ public class Menu extends JPanel implements ActionListener{
 					while(res.next()){
 						nomJTextField.setText(res.getString("nome"));
 						tamJTextField.setText(res.getString("tamanho"));
-						precJTextField.setText(res.getString("preo"));
+						precJTextField.setText(res.getString("preco"));
 						catJTextField.setText(res.getString("categoria"));
 					}
 					}
 					catch(SQLException se){
 					
 					}
-
-					JButton closeButton = new JButton("Cancelar");
-					closeButton.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							modalDialog.dispose();
-							System.out.println("modal off");
-						}
-					});
 
 					JButton editButton = new JButton("Editar");
 					editButton.addActionListener(new ActionListener() {
@@ -450,6 +441,16 @@ public class Menu extends JPanel implements ActionListener{
 								ex.printStackTrace();
 							}
 							JOptionPane.showMessageDialog(addPizzaJPanel, "Item menu editado");
+						}
+					});
+					JButton closeButton = new JButton("Cancelar");
+					closeButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							modalDialog.dispose();
+							modalDialogFooter.remove(closeButton);
+							modalDialogFooter.remove(editButton);
+							System.out.println("modal off");
 						}
 					});
 

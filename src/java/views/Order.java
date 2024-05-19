@@ -294,7 +294,6 @@ public class Order extends JPanel implements ActionListener{
 				cardBottomBtnsJPanel[getID[i]].remove(cardDeleteJButton[getID[i]]);
 				cardAllBtnsJPanel[getID[i]].remove(cardTopBtnsJPanel[getID[i]]);
 				cardAllBtnsJPanel[getID[i]].remove(cardBottomBtnsJPanel[getID[i]]);
-				cardBottomBtnsJPanel[getID[i]].setBackground(new Color(0xFFFFFF));
 
 				cardJPanel[getID[i]].remove(pddcardImgJLabel[getID[i]]);
 				cardJPanel[getID[i]].remove(cardJLabel[getID[i]]);

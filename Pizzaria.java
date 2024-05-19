@@ -1,5 +1,5 @@
 //javac -cp C:\Users\Filipe\Desktop\Java\GUI\Pizzaria;. Pizzaria.java
-//java -cp C:\Users\Filipe\Desktop\Java\GUI\Pizzaria\src\resources\config\mysql-connector-j-8.3.0.jar;. Pizzaria.java
+//javac -cp C:\Users\Filipe\Desktop\Java\GUI\Pizzaria\src\resources\config\mysql-connector-j-8.3.0.jar;. Pizzaria.java
 import src.java.views.*;
 import src.java.views.auth.*;
 

@@ -230,7 +230,7 @@ public class Menu extends JPanel implements ActionListener{
 			JDialog modalDialog = new JDialog();
 			modalDialog.setTitle("Modal Dialog");
 			modalDialog.setModal(true);
-			modalDialog.setSize(300, 200);
+			modalDialog.setSize(300, 220);
 			modalDialog.setUndecorated(true);
 			modalDialog.setLocationRelativeTo(menuJPanel);
 			modalDialog.setBackground(new Color(0xfebd00));
@@ -239,21 +239,44 @@ public class Menu extends JPanel implements ActionListener{
 			JPanel modalDialogHeader = new JPanel();
 			JPanel modalDialogBody = new JPanel();
 			JPanel modalDialogFooter = new JPanel();
+			JPanel nomeDiv = new JPanel();
+			JPanel tamDiv = new JPanel();
+			JPanel precDiv = new JPanel();
+			JPanel catDiv = new JPanel();
 
 			JLabel modalDialogTitle = new JLabel("Adicionar Pizza");
-			JButton closeButton = new JButton("Close");
+			modalDialogTitle.setFont(new Font("Arial", Font.BOLD, 20));
+			JButton closeButton = new JButton("Cancelar");
+			closeButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					modalDialog.dispose();
+					System.out.println("modal off");
+				}
+			});
+
+			GridBagConstraints constraints = new GridBagConstraints();
+        	constraints.gridx   = 0;
+        	constraints.gridy   = GridBagConstraints.RELATIVE;
+        	constraints.anchor  = GridBagConstraints.CENTER;
+        	constraints.insets  = new Insets(5, 7, 5, 7);
 
 			modalDialogHeader.add(modalDialogTitle);
-			modalDialogBody.add(nomJLabel);
-			modalDialogBody.add(nomJTextField);
-			modalDialogBody.add(tamJLabel);
-			modalDialogBody.add(tamJTextField);
-			modalDialogBody.add(precJLabel);
-			modalDialogBody.add(precJTextField);
-			modalDialogBody.add(catJLabel);
-			modalDialogBody.add(catJTextField);
-			modalDialogBody.add(addPizzJButton);
+			nomeDiv.add(nomJLabel);
+			nomeDiv.add(nomJTextField);
+			tamDiv.add(tamJLabel);
+			tamDiv.add(tamJTextField);
+			precDiv.add(precJLabel);
+			precDiv.add(precJTextField);
+			catDiv.add(catJLabel);
+			catDiv.add(catJTextField);
+
+			modalDialogBody.add(nomeDiv, constraints);
+			modalDialogBody.add(tamDiv, constraints);
+			modalDialogBody.add(precDiv, constraints);
+			modalDialogBody.add(catDiv, constraints);
 			modalDialogFooter.add(closeButton);
+			modalDialogFooter.add(addPizzJButton);
 			
 			// Add components to the dialog
 			modalDialog.add(modalDialogHeader, BorderLayout.NORTH);
@@ -262,14 +285,6 @@ public class Menu extends JPanel implements ActionListener{
 
 			// Display the dialog
 			modalDialog.setVisible(true);
-
-			closeButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					modalDialog.dispose();
-					System.out.println("modal off");
-				}
-			});
 		}
 		else if(e.getSource() == addPizzJButton){
 			System.out.println("pressed");

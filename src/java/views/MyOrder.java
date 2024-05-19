@@ -131,7 +131,7 @@ public class MyOrder extends JPanel implements ActionListener{
         constraints.anchor  = GridBagConstraints.CENTER;
         constraints.insets  = new Insets(5, 7, 5, 7);
 
-		try (InputStream is = Order.class.getResourceAsStream("/src/resources/assets/order.png")) {
+		try (InputStream is = Order.class.getResourceAsStream("/src/resources/assets/myorder.png")) {
 			if (is != null) {
 				pddcardImgIcon		= ImageIO.read(is);
         		pddcardImgResize 	= pddcardImgIcon.getScaledInstance(200, 160, Image.SCALE_SMOOTH);

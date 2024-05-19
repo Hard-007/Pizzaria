@@ -169,8 +169,8 @@ public class Staff extends JPanel implements ActionListener{
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
 
-		addPizza = new JButton("Adicionar Pizza");
-		addPizza.addActionListener(this);
+		//addPizza = new JButton("Adicionar");
+		//addPizza.addActionListener(this);
 
 		modalDialogHeader.add(modalDialogTitle);
 		nomeDiv.add(nomJLabel);
@@ -195,7 +195,7 @@ public class Staff extends JPanel implements ActionListener{
 		
 		menuHeaderJPanel.setBackground(new Color(0x123456));
 		menuHeaderJPanel.add(actualizar);
-		menuHeaderJPanel.add(addPizza);
+		//menuHeaderJPanel.add(addPizza);
         //menuBodyJPanel.add(scrollPane);
 
 		menuJPanel.add(menuHeaderJPanel, BorderLayout.NORTH);
@@ -233,12 +233,8 @@ public class Staff extends JPanel implements ActionListener{
 				cardJPanel[getID[count]] = new JPanel(new BorderLayout());
 				pddcardImgJLabel[getID[count]] = new JLabel();
 				cardJLabel[getID[count]] = new JTextArea();
-				spinnerModel[getID[count]] = new SpinnerNumberModel(0, 0, 100, 1);
-				spinner[getID[count]] = new JSpinner(spinnerModel[getID[count]]);
-				cardJButton[getID[count]] = new JButton("Pedir");
 				cardEditJButton[getID[count]] = new JButton("Editar");
 				cardDeleteJButton[getID[count]] = new JButton("Excluir");
-				cardTopBtnsJPanel[getID[count]] = new JPanel();
 				cardBottomBtnsJPanel[getID[count]] = new JPanel();
 				cardAllBtnsJPanel[getID[count]] = new JPanel(new BorderLayout());
 
@@ -256,7 +252,6 @@ public class Staff extends JPanel implements ActionListener{
         		cardJLabel[getID[count]].setLineWrap(true);
         		cardJLabel[getID[count]].setBorder(BorderFactory.createEmptyBorder());
 
-				cardJButton[getID[count]].addActionListener(this);
 				cardEditJButton[getID[count]].addActionListener(this);
 				cardDeleteJButton[getID[count]].addActionListener(this);
 
@@ -268,19 +263,14 @@ public class Staff extends JPanel implements ActionListener{
 					cardBottomBtnsJPanel[getID[count]].setVisible(false);
 				}
 
-				cardTopBtnsJPanel[getID[count]].add(spinner[getID[count]]);
-				cardTopBtnsJPanel[getID[count]].add(cardJButton[getID[count]]);
 				cardBottomBtnsJPanel[getID[count]].add(cardEditJButton[getID[count]]);
 				cardBottomBtnsJPanel[getID[count]].add(cardDeleteJButton[getID[count]]);
-				cardAllBtnsJPanel[getID[count]].add(cardTopBtnsJPanel[getID[count]], BorderLayout.NORTH);
 				cardAllBtnsJPanel[getID[count]].add(cardBottomBtnsJPanel[getID[count]], BorderLayout.SOUTH);
-				cardTopBtnsJPanel[getID[count]].setBackground(new Color(0xFFFFFF));
 				cardBottomBtnsJPanel[getID[count]].setBackground(new Color(0xFFFFFF));
 
 				cardJPanel[getID[count]].add(pddcardImgJLabel[getID[count]], BorderLayout.NORTH);
 				cardJPanel[getID[count]].add(cardJLabel[getID[count]], BorderLayout.CENTER);
 				cardJPanel[getID[count]].add(cardAllBtnsJPanel[getID[count]], BorderLayout.SOUTH);
-				menuBodyJPanel.add(cardJPanel[getID[count]]);
 				menuBodyJPanel.add(cardJPanel[getID[count]]);
 				revalidate();
 				repaint();
@@ -345,7 +335,7 @@ public class Staff extends JPanel implements ActionListener{
 			String pre = precJTextField.getText();
 			String ca = catJTextField.getText();
 
-			String sql = "INSERT INTO menu (nome, tamanho, preco, categoria) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO users (username, nome, apelido, email, contacto, category) VALUES (?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement ps = null;
 			try {
@@ -364,50 +354,7 @@ public class Staff extends JPanel implements ActionListener{
 		}
 		else{
 			for(int i = 0; i<=count; i++){
-				if (e.getSource() == cardJButton[getID[i]]) {
-					String Pid = ""+getID[i];
-					String Pquant = ""+(Integer) spinner[getID[i]].getValue();
-					String stts = "Pendente";
-					String nomeP = null;
-					String tamP = null;
-					String preP = null;
-					
-					try{
-					Connection conn = DBConnection.getConexao();
-					Statement stmt = conn.createStatement();
-					ResultSet res = stmt.executeQuery("SELECT * FROM menu WHERE id='"+Pid+"' ");
-					while(res.next()){
-						nomeP = res.getString("nome");
-						tamP = res.getString("tamanho");
-						preP = res.getString("preco");
-					}
-					}
-					catch(SQLException se){
-						
-					}
-					
-					String sql = "INSERT INTO pedido (id_user, codigo, nome, tamanho, preco, quantidade, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-					String code = (nomeP.substring(0, 3)+""+tamP.substring(0, 3)+""+preP.substring(0, 3)+""+new Random().nextInt(100)+1).toUpperCase();
-
-					PreparedStatement ps = null;
-					try {
-						ps = DBConnection.getConexao().prepareStatement(sql);
-						ps.setString(1, Home.getUser());
-						ps.setString(2, code);
-						ps.setString(3, nomeP);
-						ps.setString(4, tamP);
-						ps.setString(5, preP);
-						ps.setString(6, Pquant);
-						ps.setString(7, stts);
-						ps.execute();
-						ps.close();
-					}
-					catch(SQLException ex) {
-						ex.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido adicionado");
-				}
-				else if (e.getSource() == cardEditJButton[getID[i]]) {
+				if (e.getSource() == cardEditJButton[getID[i]]) {
 					String Pid = ""+getID[i];
 					String nomeP = null;
 					String tamP = null;
@@ -417,7 +364,7 @@ public class Staff extends JPanel implements ActionListener{
 					try{
 					Connection conn = DBConnection.getConexao();
 					Statement stmt = conn.createStatement();
-					ResultSet res = stmt.executeQuery("SELECT * FROM menu WHERE id='"+Pid+"' ");
+					ResultSet res = stmt.executeQuery("SELECT * FROM users WHERE id='"+Pid+"' ");
 					while(res.next()){
 						nomJTextField.setText(res.getString("nome"));
 						tamJTextField.setText(res.getString("tamanho"));
@@ -438,7 +385,7 @@ public class Staff extends JPanel implements ActionListener{
 							String editprecP = precJTextField.getText();
 							String editcatP = catJTextField.getText();
 
-							String sql = "UPDATE menu SET nome=?, tamanho=?, preco=?, categoria=?, updated_at=? WHERE id = ?";
+							String sql = "UPDATE users SET nome=?, tamanho=?, preco=?, categoria=?, updated_at=? WHERE id = ?";
 
 							PreparedStatement ps = null;
 							try {
@@ -479,7 +426,7 @@ public class Staff extends JPanel implements ActionListener{
 				else if (e.getSource() == cardDeleteJButton[getID[i]]) {
 					String Pid = ""+getID[i];
 
-					String sql = "DELETE FROM menu WHERE id = ?";
+					String sql = "DELETE FROM users WHERE id = ?";
 
 					PreparedStatement ps = null;
 					try {

@@ -269,7 +269,6 @@ public class Menu extends JPanel implements ActionListener{
 				cardJPanel[getID[count]].add(cardJLabel[getID[count]], BorderLayout.CENTER);
 				cardJPanel[getID[count]].add(cardAllBtnsJPanel[getID[count]], BorderLayout.SOUTH);
 				menuBodyJPanel.add(cardJPanel[getID[count]]);
-				menuBodyJPanel.add(cardJPanel[getID[count]]);
 				revalidate();
 				repaint();
 				

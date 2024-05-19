@@ -239,7 +239,7 @@ public class MyOrder extends JPanel implements ActionListener{
 				cardBottomBtnsJPanel[getID[count]] = new JPanel();
 				cardAllBtnsJPanel[getID[count]] = new JPanel(new BorderLayout());
 
-				cardJLabel[count].setText("   ID: "+res.getString("id")+"\n   ID_user: "+res.getString("id_user")+"\n   Codigo: "+res.getString("codigo")+"\n   Nome Usuario: "+res.getString("nomeU")+"\n   Nome Pizza: "+res.getString("nomeP")+"\n   Tamanho: "+res.getString("tam")+"\n   Preco: "+res.getString("preco")+"\n   Quantidade: "+res.getString("quant")+"\n   Status: "+res.getString("stt")+"\n   Crono: "+res.getString("crea")+"\n   Total: "+(res.getInt("preco")*res.getInt("quant"))+",00 MZN");
+				cardJLabel[getID[count]].setText("   ID: "+res.getString("id")+"\n   Nome Pizza: "+res.getString("nome")+"\n   Tamanho: "+res.getString("tamanho")+"\n   Preco: "+res.getString("preco")+"\n   Quantidade: "+res.getString("quantidade")+"\n   Status: "+res.getString("status")+"\n   Crono: "+res.getString("created_at")+"\n   Total: "+(res.getInt("preco")*res.getInt("quantidade"))+",00 MZN");
 				cardJLabel[getID[count]].setOpaque(true);
 				//cardJLabel[getID[count]].setBackground(new Color(0x444444));
 				//cardJLabel[getID[count]].setForeground(new Color(0xFFFFFF));

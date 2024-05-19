@@ -16,10 +16,6 @@ import java.net.URL.*;
 
 import java.sql.*;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
 import src.resources.config.DBConnection;
 
 import java.io.InputStream;

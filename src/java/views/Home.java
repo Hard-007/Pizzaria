@@ -102,6 +102,7 @@ public class Home extends JFrame implements ActionListener{
 
         brandName   = new JLabel("Home");
         profile     = new JButton("null");
+        profile.addActionListener(this);
 
         dashJButton     = new JButton("Dashboard");
         menuJButton     = new JButton("Menu");
@@ -109,7 +110,7 @@ public class Home extends JFrame implements ActionListener{
         myOrderJButton  = new JButton("Meus pedidos");
         staffJButton    = new JButton("Funcionarios");
         clientJButton   = new JButton("Clientes");
-        profileJButton  = new JButton("Conta");
+        profileJButton  = new JButton("Perfil");
         settingJButton  = new JButton("Definicoes");
         logsJButton     = new JButton("Logs");
         exitJButton     = new JButton("Logout");
@@ -308,7 +309,7 @@ public class Home extends JFrame implements ActionListener{
             revalidate();
             repaint();
         }
-        else if(e.getSource() == profileJButton){
+        else if(e.getSource() == profileJButton || e.getSource() == profile){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
             orderObj.setVisible(false);

@@ -38,6 +38,11 @@ public class Menu extends JPanel implements ActionListener{
 	SpinnerModel spinnerModel[];
 	JSpinner spinner[];
 	JPanel cardBtnsJPanel[];
+	JButton cardEditJButton[];
+	JButton cardDeleteJButton[];
+	JPanel cardTopBtnsJPanel[];
+	JPanel cardBottomBtnsJPanel[];
+	JPanel cardAllBtnsJPanel[];
 
 	ArrayList<String> pizzas;
 	Object[][] data;
@@ -78,7 +83,11 @@ public class Menu extends JPanel implements ActionListener{
 		cardJButton = new JButton[100];
 		spinnerModel = new SpinnerNumberModel[100];
 		spinner = new JSpinner[100];
-		cardBtnsJPanel = new JPanel[100];
+		cardEditJButton = new JButton[100];
+		cardDeleteJButton = new JButton[100];
+		cardTopBtnsJPanel = new JPanel[100];
+		cardBottomBtnsJPanel = new JPanel[100];
+		cardAllBtnsJPanel = new JPanel[100];
 
 
         cardImgIcon		= new ImageIcon("src/resources/assets/pizza-ico.png");
@@ -93,7 +102,7 @@ public class Menu extends JPanel implements ActionListener{
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(895, 515));
+        scrollPane.setPreferredSize(new Dimension(895, 520));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
@@ -168,7 +177,11 @@ public class Menu extends JPanel implements ActionListener{
 				spinnerModel[count] = new SpinnerNumberModel(0, 0, 100, 1);
 				spinner[count] = new JSpinner(spinnerModel[count]);
 				cardJButton[count] = new JButton("Pedir");
-				cardBtnsJPanel[count] = new JPanel();
+				cardEditJButton[count] = new JButton("Editar");
+				cardDeleteJButton[count] = new JButton("Excluir");
+				cardTopBtnsJPanel[count] = new JPanel();
+				cardBottomBtnsJPanel[count] = new JPanel();
+				cardAllBtnsJPanel[count] = new JPanel(new BorderLayout());
 
 				cardJLabel[count].setText("   ID: "+res.getString("id")+"\n   Nome: "+res.getString("nome")+"\n   Tamanho: "+res.getString("tamanho")+"\n   Categoria: "+res.getString("categoria")+"\n   Preco: "+res.getString("preco"));
 				cardJLabel[count].setOpaque(true);
@@ -185,16 +198,21 @@ public class Menu extends JPanel implements ActionListener{
         		cardJLabel[count].setBorder(BorderFactory.createEmptyBorder());
 
 				cardJButton[count].addActionListener(this);
-				cardBtnsJPanel[count].add(spinner[count]);
-				cardBtnsJPanel[count].add(cardJButton[count]);
-				cardBtnsJPanel[count].setBackground(new Color(0xFFFFFF));
+				cardTopBtnsJPanel[count].add(spinner[count]);
+				cardTopBtnsJPanel[count].add(cardJButton[count]);
+				cardBottomBtnsJPanel[count].add(cardEditJButton[count]);
+				cardBottomBtnsJPanel[count].add(cardDeleteJButton[count]);
+				cardAllBtnsJPanel[count].add(cardTopBtnsJPanel[count], BorderLayout.NORTH);
+				cardAllBtnsJPanel[count].add(cardBottomBtnsJPanel[count], BorderLayout.SOUTH);
+				cardTopBtnsJPanel[count].setBackground(new Color(0xFFFFFF));
+				cardBottomBtnsJPanel[count].setBackground(new Color(0xFFFFFF));
 
 				cardJPanel[count].setBackground(new Color(0x444444));
 				cardImgJLabel[count].setIcon(cardImgResized);
 
 				cardJPanel[count].add(cardImgJLabel[count], BorderLayout.NORTH);
 				cardJPanel[count].add(cardJLabel[count], BorderLayout.CENTER);
-				cardJPanel[count].add(cardBtnsJPanel[count], BorderLayout.SOUTH);
+				cardJPanel[count].add(cardAllBtnsJPanel[count], BorderLayout.SOUTH);
 				menuBodyJPanel.add(cardJPanel[count]);
 				revalidate();
 				repaint();

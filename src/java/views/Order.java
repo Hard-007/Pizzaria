@@ -168,7 +168,7 @@ public class Order extends JPanel implements ActionListener{
 		try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT pedido.id AS id, pedido.nome AS nomeP, pedido.tamanho AS tam, pedido.preco AS preco, pedido.quantidade AS quant, pedido.status AS stt, pedido.created_at AS crea, users.id AS id_user, users.nome AS nomeU FROM pedido JOIN users ON pedido.id_user=users.id ");
+			ResultSet res = stmt.executeQuery("SELECT pedido.id AS id, pedido.codigo as code, pedido.nome AS nomeP, pedido.tamanho AS tam, pedido.preco AS preco, pedido.quantidade AS quant, pedido.status AS stt, pedido.created_at AS crea, users.id AS id_user, users.nome AS nomeU FROM pedido JOIN users ON pedido.id_user=users.id ");
 			count=0;
 			
 			while(res.next()){
@@ -180,7 +180,7 @@ public class Order extends JPanel implements ActionListener{
 				cardJButton[count] = new JButton("Atender");
 				cardBtnsJPanel[count] = new JPanel();
 
-				cardJLabel[count].setText("   ID: "+res.getString("id")+"\n   ID_user: "+res.getString("id_user")+"\n   Nome Usuario: "+res.getString("nomeU")+"\n   Nome Pizza: "+res.getString("nomeP")+"\n   Tamanho: "+res.getString("tam")+"\n   Preco: "+res.getString("preco")+"\n   Quantidade: "+res.getString("quant")+"\n   Status: "+res.getString("stt")+"\n   Crono: "+res.getString("crea")+"\n   Total: "+(res.getInt("preco")*res.getInt("quant"))+",00 MZN");
+				cardJLabel[count].setText("   ID: "+res.getString("id")+"\n   ID_user: "+res.getString("id_user")+"\n   Codigo: "+res.getString("code")+"\n   Nome Usuario: "+res.getString("nomeU")+"\n   Nome Pizza: "+res.getString("nomeP")+"\n   Tamanho: "+res.getString("tam")+"\n   Preco: "+res.getString("preco")+"\n   Quantidade: "+res.getString("quant")+"\n   Status: "+res.getString("stt")+"\n   Crono: "+res.getString("crea")+"\n   Total: "+(res.getInt("preco")*res.getInt("quant"))+",00 MZN");
 				cardJLabel[count].setOpaque(true);
 				//cardJLabel[count].setBackground(new Color(0x444444));
 				//cardJLabel[count].setForeground(new Color(0xFFFFFF));

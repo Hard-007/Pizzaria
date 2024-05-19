@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import java.net.*;
 import java.net.URL.*;
 
@@ -358,7 +359,7 @@ public class Menu extends JPanel implements ActionListener{
 					String nomeP = null;
 					String tamP = null;
 					String preP = null;
-
+					
 					try{
 					Connection conn = DBConnection.getConexao();
 					Statement stmt = conn.createStatement();
@@ -370,20 +371,22 @@ public class Menu extends JPanel implements ActionListener{
 					}
 					}
 					catch(SQLException se){
-					
+						
 					}
-				
-					String sql = "INSERT INTO pedido (id_user, nome, tamanho, preco, quantidade, status) VALUES (?, ?, ?, ?, ?, ?)";
+					
+					String sql = "INSERT INTO pedido (id_user, codigo, nome, tamanho, preco, quantidade, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+					String code = (nomeP.substring(0, 3)+""+tamP.substring(0, 3)+""+preP.substring(0, 3)+""+new Random().nextInt(100)+1).toUpperCase();
 
 					PreparedStatement ps = null;
 					try {
 						ps = DBConnection.getConexao().prepareStatement(sql);
 						ps.setString(1, Home.getUser());
-						ps.setString(2, nomeP);
-						ps.setString(3, tamP);
-						ps.setString(4, preP);
-						ps.setString(5, Pquant);
-						ps.setString(6, stts);
+						ps.setString(2, code);
+						ps.setString(3, nomeP);
+						ps.setString(4, tamP);
+						ps.setString(5, preP);
+						ps.setString(6, Pquant);
+						ps.setString(7, stts);
 						ps.execute();
 						ps.close();
 					}

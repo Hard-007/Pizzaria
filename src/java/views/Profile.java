@@ -20,8 +20,8 @@ import javax.swing.*;
 
 import src.resources.config.DBConnection;
 
-public class Account extends JPanel{
-    public Account(){
+public class Profile extends JPanel{
+    public Profile(){
         JPanel Conta = new JPanel(new BorderLayout());
 		Label contaText = new Label("Detalhes da conta");
 		

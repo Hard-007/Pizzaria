@@ -8,16 +8,22 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
 import java.net.*;
 import java.net.URL.*;
 
 import java.sql.*;
 
-import java.io.InputStream;
-import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 import src.resources.config.DBConnection;
+
+import java.io.InputStream;
+import javax.imageio.ImageIO;
 
 public class Order extends JPanel implements ActionListener{
 	JPanel menuJPanel;
@@ -34,17 +40,22 @@ public class Order extends JPanel implements ActionListener{
 	JPanel cardJPanel[];
 	JTextArea cardJLabel[];
 	JButton cardJButton[];
+	SpinnerModel spinnerModel[];
+	JSpinner spinner[];
 	JPanel cardBtnsJPanel[];
+	JButton cardEditJButton[];
+	JButton cardDeleteJButton[];
+	JPanel cardTopBtnsJPanel[];
+	JPanel cardBottomBtnsJPanel[];
+	JPanel cardAllBtnsJPanel[];
 
 	ArrayList<String> pizzas;
 	Object[][] data;
-	int count, l=0;
+	int count;
+	int[] getID;
 
 	JButton actualizar;
-	JButton verPizza;
 	JButton addPizza;
-	JButton editPizza;
-
 
 
 	JLabel nomJLabel;
@@ -67,13 +78,58 @@ public class Order extends JPanel implements ActionListener{
 
 	JScrollPane scrollPane;
 
+	JDialog modalDialog;
+
+	JLabel modalDialogTitle;
+	JPanel modalDialogHeader;
+	JPanel modalDialogBody;
+	JPanel modalDialogFooter;
+	JPanel nomeDiv;
+	JPanel tamDiv;
+	JPanel precDiv;
+	JPanel catDiv;
+	
+	GridBagConstraints constraints;
+
     public Order(String accessLevel){
 		pizzas = new ArrayList<String>();
 		cardJPanel = new JPanel[100];
 		cardJLabel = new JTextArea[100];
 		pddcardImgJLabel= new JLabel[100];
 		cardJButton = new JButton[100];
-		cardBtnsJPanel = new JPanel[100];
+		spinnerModel = new SpinnerNumberModel[100];
+		spinner = new JSpinner[100];
+		cardEditJButton = new JButton[100];
+		cardDeleteJButton = new JButton[100];
+		cardTopBtnsJPanel = new JPanel[100];
+		cardBottomBtnsJPanel = new JPanel[100];
+		cardAllBtnsJPanel = new JPanel[100];
+		getID = new int[100];
+
+		modalDialog = new JDialog();
+		modalDialog.setSize(300, 220);
+		modalDialog.setModal(true);
+		modalDialog.setUndecorated(true);
+		modalDialog.setLocationRelativeTo(menuJPanel);
+		modalDialog.setBackground(new Color(0xfebd00));
+		modalDialog.setLayout(new BorderLayout());
+		
+		modalDialogTitle = new JLabel();
+		modalDialogTitle.setFont(new Font("Arial", Font.BOLD, 20));
+
+		modalDialogHeader = new JPanel();
+		modalDialogBody = new JPanel();
+		modalDialogFooter = new JPanel();
+		nomeDiv = new JPanel();
+		tamDiv = new JPanel();
+		precDiv = new JPanel();
+		catDiv = new JPanel();
+
+		constraints = new GridBagConstraints();
+        constraints.gridx   = 0;
+        constraints.gridy   = GridBagConstraints.RELATIVE;
+        constraints.anchor  = GridBagConstraints.CENTER;
+        constraints.insets  = new Insets(5, 7, 5, 7);
 
 		try (InputStream is = Order.class.getResourceAsStream("/src/resources/assets/order.png")) {
 			if (is != null) {
@@ -95,7 +151,8 @@ public class Order extends JPanel implements ActionListener{
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
-        scrollPane.setPreferredSize(new Dimension(860, 475));
+		scrollPane.setBorder(null);
+        scrollPane.setPreferredSize(new Dimension(895, 520));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
@@ -109,39 +166,36 @@ public class Order extends JPanel implements ActionListener{
 		addPizzJButton = new JButton("Adicionar");
 		addPizzJButton.addActionListener(this);
 
-		addPizzaJPanel.add(nomJLabel);
-		addPizzaJPanel.add(nomJTextField);
-		addPizzaJPanel.add(tamJLabel);
-		addPizzaJPanel.add(tamJTextField);
-		addPizzaJPanel.add(precJLabel);
-		addPizzaJPanel.add(precJTextField);
-		addPizzaJPanel.add(catJLabel);
-		addPizzaJPanel.add(catJTextField);
-		addPizzaJPanel.add(addPizzJButton);
-
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
 
-		verPizza = new JButton("Ver pizza");
-		addPizza = new JButton("Adicionar Pizza");
-		editPizza = new JButton("Editar Pizza");
-        verPizza.addActionListener(this);
-		addPizza.addActionListener(this);
-		editPizza.addActionListener(this);
+		//addPizza = new JButton("Adicionar");
+		//addPizza.addActionListener(this);
 
-		if (accessLevel.equals("user")) {
-			verPizza.setVisible(false);
-			addPizza.setVisible(false);
-			editPizza.setVisible(false);
-		}
+		modalDialogHeader.add(modalDialogTitle);
+		nomeDiv.add(nomJLabel);
+		nomeDiv.add(nomJTextField);
+		tamDiv.add(tamJLabel);
+		tamDiv.add(tamJTextField);
+		precDiv.add(precJLabel);
+		precDiv.add(precJTextField);
+		catDiv.add(catJLabel);
+		catDiv.add(catJTextField);
+		modalDialogBody.add(nomeDiv, constraints);
+		modalDialogBody.add(tamDiv, constraints);
+		modalDialogBody.add(precDiv, constraints);
+		modalDialogBody.add(catDiv, constraints);
+
+		// Add components to the dialog
+		modalDialog.add(modalDialogHeader, BorderLayout.NORTH);
+		modalDialog.add(modalDialogBody, BorderLayout.CENTER);
+		modalDialog.add(modalDialogFooter, BorderLayout.SOUTH);
 		
-		menuDados();
+		menuDados(accessLevel);
 		
 		menuHeaderJPanel.setBackground(new Color(0x123456));
 		menuHeaderJPanel.add(actualizar);
-		//menuHeaderJPanel.add(verPizza);
 		//menuHeaderJPanel.add(addPizza);
-		//menuHeaderJPanel.add(editPizza);
         //menuBodyJPanel.add(scrollPane);
 
 		menuJPanel.add(menuHeaderJPanel, BorderLayout.NORTH);
@@ -154,9 +208,9 @@ public class Order extends JPanel implements ActionListener{
 			while (true) {
 				try {
 					Thread.sleep(5000); 
-					menuDados();
-					System.out.println("Verificando Pedidos");
-					//notify();
+					rmMenuDados();
+					menuDados("admin");
+					//System.out.println("Refreshing Menu");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -164,81 +218,147 @@ public class Order extends JPanel implements ActionListener{
 		});
 		verificaDados.start();*/
     }
-	public void menuDados(){
+	public void menuDados(String accessLevel){
 		try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT pedido.id AS id, pedido.codigo as code, pedido.nome AS nomeP, pedido.tamanho AS tam, pedido.preco AS preco, pedido.quantidade AS quant, pedido.status AS stt, pedido.created_at AS crea, users.id AS id_user, users.nome AS nomeU FROM pedido JOIN users ON pedido.id_user=users.id ");
+			
 			count=0;
 			
 			while(res.next()){
 				count++;
+				getID[count] = Integer.parseInt(res.getString("id"));
 
-				cardJPanel[count] = new JPanel(new BorderLayout());
-				pddcardImgJLabel[count] = new JLabel();
-				cardJLabel[count] = new JTextArea();
-				cardJButton[count] = new JButton("Atender");
-				cardBtnsJPanel[count] = new JPanel();
+				cardJPanel[getID[count]] = new JPanel(new BorderLayout());
+				pddcardImgJLabel[getID[count]] = new JLabel();
+				cardJLabel[getID[count]] = new JTextArea();
+				cardJButton[getID[count]] = new JButton("Atender");
+				cardEditJButton[getID[count]] = new JButton("Editar");
+				cardDeleteJButton[getID[count]] = new JButton("Excluir");
+				cardTopBtnsJPanel[getID[count]] = new JPanel();
+				cardBottomBtnsJPanel[getID[count]] = new JPanel();
+				cardAllBtnsJPanel[getID[count]] = new JPanel(new BorderLayout());
 
-				cardJLabel[count].setText("   ID: "+res.getString("id")+"\n   ID_user: "+res.getString("id_user")+"\n   Codigo: "+res.getString("code")+"\n   Nome Usuario: "+res.getString("nomeU")+"\n   Nome Pizza: "+res.getString("nomeP")+"\n   Tamanho: "+res.getString("tam")+"\n   Preco: "+res.getString("preco")+"\n   Quantidade: "+res.getString("quant")+"\n   Status: "+res.getString("stt")+"\n   Crono: "+res.getString("crea")+"\n   Total: "+(res.getInt("preco")*res.getInt("quant"))+",00 MZN");
-				cardJLabel[count].setOpaque(true);
-				//cardJLabel[count].setBackground(new Color(0x444444));
-				//cardJLabel[count].setForeground(new Color(0xFFFFFF));
-				cardJLabel[count].setFont(new Font("Dialog", Font.BOLD, 14));
-				//cardJLabel[count].setHorizontalAlignment(SwingConstants.CENTER);
+				cardJLabel[getID[count]].setText("   ID: "+res.getString("id")+"\n   ID_user: "+res.getString("id_user")+"\n   Codigo: "+res.getString("code")+"\n   Nome Usuario: "+res.getString("nomeU")+"\n   Nome Pizza: "+res.getString("nomeP")+"\n   Tamanho: "+res.getString("tam")+"\n   Preco: "+res.getString("preco")+"\n   Quantidade: "+res.getString("quant")+"\n   Status: "+res.getString("stt")+"\n   Crono: "+res.getString("crea")+"\n   Total: "+(res.getInt("preco")*res.getInt("quant"))+",00 MZN");
+				cardJLabel[getID[count]].setOpaque(true);
+				//cardJLabel[getID[count]].setBackground(new Color(0x444444));
+				//cardJLabel[getID[count]].setForeground(new Color(0xFFFFFF));
+				cardJLabel[getID[count]].setFont(new Font("Dialog", Font.BOLD, 14));
+				//cardJLabel[getID[count]].setHorizontalAlignment(SwingConstants.CENTER);
 				
-				cardJLabel[count].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
-				cardJLabel[count].setEditable(false);
-        		cardJLabel[count].setFocusable(false);  
-        		cardJLabel[count].setWrapStyleWord(true); 
-        		cardJLabel[count].setLineWrap(true);
-        		cardJLabel[count].setBorder(BorderFactory.createEmptyBorder());
+				cardJLabel[getID[count]].setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+				cardJLabel[getID[count]].setEditable(false);
+        		cardJLabel[getID[count]].setFocusable(false);  
+        		cardJLabel[getID[count]].setWrapStyleWord(true); 
+        		cardJLabel[getID[count]].setLineWrap(true);
+        		cardJLabel[getID[count]].setBorder(BorderFactory.createEmptyBorder());
 
-				cardJButton[count].addActionListener(this);
-				cardBtnsJPanel[count].add(cardJButton[count]);
-				cardBtnsJPanel[count].setBackground(new Color(0xFFFFFF));
+				cardJButton[getID[count]].addActionListener(this);
+				cardEditJButton[getID[count]].addActionListener(this);
+				cardDeleteJButton[getID[count]].addActionListener(this);
 
-				cardJPanel[count].setPreferredSize(new Dimension(200, 390));
-				cardJPanel[count].setBackground(new Color(0x444444));
-				pddcardImgJLabel[count].setIcon(pddcardImgResized);
+				cardJPanel[getID[count]].setBackground(new Color(0x444444));
+				pddcardImgJLabel[getID[count]].setIcon(pddcardImgResized);
 
-				cardJPanel[count].add(pddcardImgJLabel[count], BorderLayout.NORTH);
-				cardJPanel[count].add(cardJLabel[count], BorderLayout.CENTER);
-				cardJPanel[count].add(cardBtnsJPanel[count], BorderLayout.SOUTH);
-				menuBodyJPanel.add(cardJPanel[count]);
+				if (accessLevel.equals("user")) {
+					addPizza.setVisible(false);
+					cardBottomBtnsJPanel[getID[count]].setVisible(false);
+				}
+
+				cardTopBtnsJPanel[getID[count]].add(cardJButton[getID[count]]);
+				cardBottomBtnsJPanel[getID[count]].add(cardEditJButton[getID[count]]);
+				cardBottomBtnsJPanel[getID[count]].add(cardDeleteJButton[getID[count]]);
+				cardAllBtnsJPanel[getID[count]].add(cardTopBtnsJPanel[getID[count]], BorderLayout.NORTH);
+				cardAllBtnsJPanel[getID[count]].add(cardBottomBtnsJPanel[getID[count]], BorderLayout.SOUTH);
+				cardBottomBtnsJPanel[getID[count]].setBackground(new Color(0xFFFFFF));
+
+				cardJPanel[getID[count]].add(pddcardImgJLabel[getID[count]], BorderLayout.NORTH);
+				cardJPanel[getID[count]].add(cardJLabel[getID[count]], BorderLayout.CENTER);
+				cardJPanel[getID[count]].add(cardAllBtnsJPanel[getID[count]], BorderLayout.SOUTH);
+				menuBodyJPanel.add(cardJPanel[getID[count]]);
 				revalidate();
 				repaint();
+				
 			}
 		}
 		catch(SQLException exp) {
 			exp.printStackTrace();
 		}
 	}
+	public void rmMenuDados(){
+		for(int i = 1; i<=count; i++){
+			try{
+				cardTopBtnsJPanel[getID[i]].remove(cardJButton[getID[i]]);
+				cardBottomBtnsJPanel[getID[i]].remove(cardEditJButton[getID[i]]);
+				cardBottomBtnsJPanel[getID[i]].remove(cardDeleteJButton[getID[i]]);
+				cardAllBtnsJPanel[getID[i]].remove(cardTopBtnsJPanel[getID[i]]);
+				cardAllBtnsJPanel[getID[i]].remove(cardBottomBtnsJPanel[getID[i]]);
+				cardBottomBtnsJPanel[getID[i]].setBackground(new Color(0xFFFFFF));
+
+				cardJPanel[getID[i]].remove(pddcardImgJLabel[getID[i]]);
+				cardJPanel[getID[i]].remove(cardJLabel[getID[i]]);
+				cardJPanel[getID[i]].remove(cardAllBtnsJPanel[getID[i]]);
+				menuBodyJPanel.remove(cardJPanel[getID[i]]);
+			}catch(Exception e){
+				System.out.println("bug");
+			}
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == actualizar) {
-			menuDados();
-		}
-		else if(e.getSource() == verPizza){
-			menuBodyJPanel.setVisible(true);
-			scrollPane.setVisible(true);
-			menuFooterJPanel.setVisible(true);
-			revalidate();
-			repaint();
-			menuJPanel.add(menuBodyJPanel, BorderLayout.CENTER);
+			rmMenuDados();
+			menuDados("admin");
 		}
 		else if(e.getSource() == addPizza){
-			menuBodyJPanel.setVisible(false);
-			scrollPane.setVisible(false);
-			menuFooterJPanel.setVisible(false);
-			revalidate();
-			repaint();
-			menuJPanel.add(addPizzaJPanel, BorderLayout.CENTER);
+			JButton closeButton = new JButton("Cancelar");
+			closeButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					modalDialogFooter.remove(closeButton);
+					modalDialogFooter.remove(addPizzJButton);
+					modalDialog.dispose();
+					System.out.println("modal off");
+				}
+			});
+
+			modalDialogTitle.setText("Adicionar Pizza");
+			
+			modalDialogFooter.add(closeButton);
+			modalDialogFooter.add(addPizzJButton);
+
+			// Display the dialog
+			modalDialog.setVisible(true);
+		}
+		else if(e.getSource() == addPizzJButton){
+			System.out.println("pressed");
+			String no = nomJTextField.getText();
+			String ta = tamJTextField.getText();
+			String pre = precJTextField.getText();
+			String ca = catJTextField.getText();
+
+			String sql = "INSERT INTO users (username, nome, apelido, email, contacto, category) VALUES (?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement ps = null;
+			try {
+				ps = DBConnection.getConexao().prepareStatement(sql);
+				ps.setString(1, no);
+				ps.setString(2, ta);
+				ps.setString(3, pre);
+				ps.setString(4, ca);
+				ps.execute();
+				ps.close();
+			}
+			catch(SQLException ex) {
+				ex.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(addPizzaJPanel, "Pizza adicionada");
 		}
 		else{
-			for(int i = 0; i<100; i++){
-				if (e.getSource() == cardJButton[i]) {
+			for(int i = 0; i<=count; i++){
+				if (e.getSource() == cardJButton[getID[i]]) {
 					String Pid = ""+i;
 					String stts = "Atendido";
 				
@@ -256,6 +376,92 @@ public class Order extends JPanel implements ActionListener{
 						ex.printStackTrace();
 					}
 					JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido atendido");
+				}
+				else if (e.getSource() == cardEditJButton[getID[i]]) {
+					String Pid = ""+getID[i];
+					String nomeP = null;
+					String tamP = null;
+					String precP = null;
+					String catP = null;
+
+					try{
+					Connection conn = DBConnection.getConexao();
+					Statement stmt = conn.createStatement();
+					ResultSet res = stmt.executeQuery("SELECT * FROM users WHERE id='"+Pid+"' ");
+					while(res.next()){
+						nomJTextField.setText(res.getString("nome"));
+						tamJTextField.setText(res.getString("tamanho"));
+						precJTextField.setText(res.getString("preco"));
+						catJTextField.setText(res.getString("categoria"));
+					}
+					}
+					catch(SQLException se){
+					
+					}
+
+					JButton editButton = new JButton("Editar");
+					editButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							String editnomeP =	nomJTextField.getText();
+							String edittamP = tamJTextField.getText();
+							String editprecP = precJTextField.getText();
+							String editcatP = catJTextField.getText();
+
+							String sql = "UPDATE users SET nome=?, tamanho=?, preco=?, categoria=?, updated_at=? WHERE id = ?";
+
+							PreparedStatement ps = null;
+							try {
+								ps = DBConnection.getConexao().prepareStatement(sql);
+								ps.setString(1, editnomeP);
+								ps.setString(2, edittamP);
+								ps.setString(3, editprecP);
+								ps.setString(4, editcatP);
+								ps.setString(5, ""+new Timestamp(System.currentTimeMillis()));
+								ps.setString(6, Pid);
+								ps.execute();
+								ps.close();
+							}
+							catch(SQLException ex) {
+								ex.printStackTrace();
+							}
+							JOptionPane.showMessageDialog(addPizzaJPanel, "Item menu editado");
+						}
+					});
+					JButton closeButton = new JButton("Cancelar");
+					closeButton.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							modalDialog.dispose();
+							modalDialogFooter.remove(closeButton);
+							modalDialogFooter.remove(editButton);
+							System.out.println("modal off");
+						}
+					});
+
+					modalDialogTitle.setText("Editar Pizza");
+					modalDialogFooter.add(closeButton);
+					modalDialogFooter.add(editButton);
+					// Display the dialog
+					modalDialog.setVisible(true);
+
+				}
+				else if (e.getSource() == cardDeleteJButton[getID[i]]) {
+					String Pid = ""+getID[i];
+
+					String sql = "DELETE FROM users WHERE id = ?";
+
+					PreparedStatement ps = null;
+					try {
+						ps = DBConnection.getConexao().prepareStatement(sql);
+						ps.setString(1, Pid);
+						ps.execute();
+						ps.close();
+					}
+					catch(SQLException ex) {
+						ex.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(addPizzaJPanel, "Item menu excluido");
 				}
 			}
 		}

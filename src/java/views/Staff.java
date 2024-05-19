@@ -284,18 +284,17 @@ public class Staff extends JPanel implements ActionListener{
 	public void rmMenuDados(){
 		for(int i = 1; i<=count; i++){
 			try{
-				cardTopBtnsJPanel[getID[i]].remove(spinner[getID[i]]);
-			cardTopBtnsJPanel[getID[i]].remove(cardJButton[getID[i]]);
-			cardBottomBtnsJPanel[getID[i]].remove(cardEditJButton[getID[i]]);
-			cardBottomBtnsJPanel[getID[i]].remove(cardDeleteJButton[getID[i]]);
-			cardAllBtnsJPanel[getID[i]].remove(cardTopBtnsJPanel[getID[i]]);
-			cardAllBtnsJPanel[getID[i]].remove(cardBottomBtnsJPanel[getID[i]]);
+				cardTopBtnsJPanel[getID[i]].remove(cardJButton[getID[i]]);
+				cardBottomBtnsJPanel[getID[i]].remove(cardEditJButton[getID[i]]);
+				cardBottomBtnsJPanel[getID[i]].remove(cardDeleteJButton[getID[i]]);
+				cardAllBtnsJPanel[getID[i]].remove(cardTopBtnsJPanel[getID[i]]);
+				cardAllBtnsJPanel[getID[i]].remove(cardBottomBtnsJPanel[getID[i]]);
+				cardBottomBtnsJPanel[getID[i]].setBackground(new Color(0xFFFFFF));
 
-			cardJPanel[getID[i]].remove(pddcardImgJLabel[getID[i]]);
-			cardJPanel[getID[i]].remove(cardJLabel[getID[i]]);
-			cardJPanel[getID[i]].remove(cardAllBtnsJPanel[getID[i]]);
-			menuBodyJPanel.remove(cardJPanel[getID[i]]);
-			menuBodyJPanel.remove(cardJPanel[getID[i]]);
+				cardJPanel[getID[i]].remove(pddcardImgJLabel[getID[i]]);
+				cardJPanel[getID[i]].remove(cardJLabel[getID[i]]);
+				cardJPanel[getID[i]].remove(cardAllBtnsJPanel[getID[i]]);
+				menuBodyJPanel.remove(cardJPanel[getID[i]]);
 			}catch(Exception e){
 				System.out.println("bug");
 			}

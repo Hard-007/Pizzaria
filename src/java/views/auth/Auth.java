@@ -152,6 +152,7 @@ public class Auth extends JFrame implements ActionListener{
         new Auth().setVisible(true);
 
         try .dispose() to close after login
+        
     }*/
     
 }

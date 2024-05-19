@@ -232,32 +232,44 @@ public class Menu extends JPanel implements ActionListener{
 			modalDialog.setModal(true);
 			modalDialog.setSize(300, 200);
 			modalDialog.setUndecorated(true);
-			modalDialog.setLayout(new FlowLayout());
-			// Add components to the dialog
-			modalDialog.add(nomJLabel);
-			modalDialog.add(nomJTextField);
-			modalDialog.add(tamJLabel);
-			modalDialog.add(tamJTextField);
-			modalDialog.add(precJLabel);
-			modalDialog.add(precJTextField);
-			modalDialog.add(catJLabel);
-			modalDialog.add(catJTextField);
-			modalDialog.add(addPizzJButton);
+			modalDialog.setLocationRelativeTo(menuJPanel);
+			modalDialog.setBackground(new Color(0xfebd00));
+			modalDialog.setLayout(new BorderLayout());
+			
+			JPanel modalDialogHeader = new JPanel();
+			JPanel modalDialogBody = new JPanel();
+			JPanel modalDialogFooter = new JPanel();
 
+			JLabel modalDialogTitle = new JLabel("Adicionar Pizza");
 			JButton closeButton = new JButton("Close");
+
+			modalDialogHeader.add(modalDialogTitle);
+			modalDialogBody.add(nomJLabel);
+			modalDialogBody.add(nomJTextField);
+			modalDialogBody.add(tamJLabel);
+			modalDialogBody.add(tamJTextField);
+			modalDialogBody.add(precJLabel);
+			modalDialogBody.add(precJTextField);
+			modalDialogBody.add(catJLabel);
+			modalDialogBody.add(catJTextField);
+			modalDialogBody.add(addPizzJButton);
+			modalDialogFooter.add(closeButton);
+			
+			// Add components to the dialog
+			modalDialog.add(modalDialogHeader, BorderLayout.NORTH);
+			modalDialog.add(modalDialogBody, BorderLayout.CENTER);
+			modalDialog.add(modalDialogFooter, BorderLayout.SOUTH);
+
+			// Display the dialog
+			modalDialog.setVisible(true);
+
 			closeButton.addActionListener(new ActionListener() {
-				 @Override
-				 public void actionPerformed(ActionEvent e) {
-					 modalDialog.dispose();
-				 }
-			 });
-			 modalDialog.add(closeButton);
-
-			 // Set the location of the dialog relative to the main frame
-			 modalDialog.setLocationRelativeTo(menuJPanel);
-
-			 // Display the dialog
-			 modalDialog.setVisible(true);
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					modalDialog.dispose();
+					System.out.println("modal off");
+				}
+			});
 		}
 		else if(e.getSource() == addPizzJButton){
 			System.out.println("pressed");

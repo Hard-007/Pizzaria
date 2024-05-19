@@ -95,7 +95,7 @@ public class Order extends JPanel implements ActionListener{
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
-        scrollPane.setPreferredSize(new Dimension(860, 470));
+        scrollPane.setPreferredSize(new Dimension(860, 475));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");

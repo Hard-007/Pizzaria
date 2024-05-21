@@ -64,7 +64,8 @@ public class Dashboard extends JPanel implements ActionListener{
 		dashBodyJPanel.add(nrPeddFeito);
 
 		scrollPane = new JScrollPane(dashBodyJPanel);
-        scrollPane.setPreferredSize(new Dimension(860, 470));
+		scrollPane.setBorder(null);
+        scrollPane.setPreferredSize(new Dimension(995, 600));
 
 		dashHeaderJPanel.add(actualizar);
 		dashHeaderJPanel.setBackground(new Color(0x123456));
@@ -131,10 +132,10 @@ public class Dashboard extends JPanel implements ActionListener{
 		try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT (SELECT sum(preco * quantidade) FROM pedido) AS lucro, ( SELECT count(*) FROM menu) AS p, (SELECT count(*) FROM pedido WHERE status='pendente') AS pdp, (SELECT count(*) FROM pedido WHERE status='atendido') AS pda, (SELECT count(*) FROM users WHERE category = 'staff') AS uf, (SELECT count(*) FROM users WHERE category = 'user') AS uc");
+			ResultSet res = stmt.executeQuery("SELECT (SELECT sum(preco * quantidade) FROM pedido WHERE status='atendido') AS lucro, ( SELECT count(*) FROM menu) AS p, (SELECT count(*) FROM pedido WHERE status='pendente') AS pdp, (SELECT count(*) FROM pedido WHERE status='atendido') AS pda, (SELECT count(*) FROM users WHERE category = 'staff') AS uf, (SELECT count(*) FROM users WHERE category = 'user') AS uc");
 
 			while(res.next()){
-				nrLucro.setText("Ganho\n "+res.getInt("lucro")+",00 MZN");
+				nrLucro.setText("Lucro\n "+res.getInt("lucro")+",00 MZN");
 				nrPizzas.setText(" "+res.getInt("p")+" Pizzas");
 				nrPeddPendente.setText(" "+res.getInt("pdp")+" Pedido pendentes");
 				nrPeddFeito.setText(" "+res.getInt("pda")+" Pedido atendidos ");

@@ -152,7 +152,7 @@ public class Client extends JPanel implements ActionListener{
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(895, 520));
+        scrollPane.setPreferredSize(new Dimension(995, 600));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");

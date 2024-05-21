@@ -24,6 +24,8 @@ import src.resources.config.DBConnection;
 public class Home extends JFrame implements ActionListener{
     Dashboard dashboardObj;
     Menu menuObj;
+    Cart cartObj;
+    Bill billObj;
     Order orderObj;
     MyOrder myOrderObj;
     Staff staffObj;
@@ -49,6 +51,8 @@ public class Home extends JFrame implements ActionListener{
     JButton profile ;
     JButton dashJButton     ;
     JButton menuJButton     ;
+    JButton cartJButton     ;
+    JButton billJButton     ;
     JButton orderJButton    ;
     JButton myOrderJButton  ;
     JButton staffJButton    ;
@@ -73,7 +77,7 @@ public class Home extends JFrame implements ActionListener{
         setUndecorated(true);
 
         setTitle("Pizzaria");
-		setSize(1024, 642);
+		setSize(1124, 720);
         setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -81,6 +85,8 @@ public class Home extends JFrame implements ActionListener{
 
         dashboardObj = new Dashboard();
         menuObj = new Menu(accessLevel);
+        cartObj = new Cart();
+        billObj = new Bill();
         orderObj = new Order(accessLevel);
         myOrderObj = new MyOrder(accessLevel);
         staffObj = new Staff(accessLevel);
@@ -106,6 +112,8 @@ public class Home extends JFrame implements ActionListener{
 
         dashJButton     = new JButton("Dashboard");
         menuJButton     = new JButton("Menu");
+        cartJButton     = new JButton("Carinho");
+        billJButton     = new JButton("Faturacao");
         orderJButton    = new JButton("Pedidos");
         myOrderJButton  = new JButton("Meus pedidos");
         staffJButton    = new JButton("Funcionarios");
@@ -116,6 +124,8 @@ public class Home extends JFrame implements ActionListener{
         exitJButton     = new JButton("Logout");
         dashJButton     .addActionListener(this);  
         menuJButton     .addActionListener(this);
+        cartJButton     .addActionListener(this);
+        billJButton     .addActionListener(this);
         orderJButton    .addActionListener(this);
         myOrderJButton  .addActionListener(this);
         staffJButton    .addActionListener(this);
@@ -126,6 +136,8 @@ public class Home extends JFrame implements ActionListener{
         exitJButton     .addActionListener(this);
         homeLeftJPanel.add(dashJButton);
         homeLeftJPanel.add(menuJButton);
+        homeLeftJPanel.add(cartJButton);
+        homeLeftJPanel.add(billJButton);
         homeLeftJPanel.add(orderJButton);
         homeLeftJPanel.add(myOrderJButton);
         homeLeftJPanel.add(staffJButton);
@@ -215,6 +227,8 @@ public class Home extends JFrame implements ActionListener{
 
         if (e.getSource() == dashJButton) {
             menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             orderObj.setVisible(false);
             myOrderObj.setVisible(false);
             staffObj.setVisible(false);
@@ -231,6 +245,8 @@ public class Home extends JFrame implements ActionListener{
         }
         else if(e.getSource() == menuJButton){
             dashboardObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             orderObj.setVisible(false);
             myOrderObj.setVisible(false);
             staffObj.setVisible(false);
@@ -245,9 +261,47 @@ public class Home extends JFrame implements ActionListener{
             revalidate();
             repaint();
         }
+        else if(e.getSource() == cartJButton){
+            dashboardObj.setVisible(false);
+            menuObj.setVisible(false);
+            billObj.setVisible(false);
+            orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
+            staffObj.setVisible(false);
+            clientObj.setVisible(false);
+            profileObj.setVisible(false);
+            settingObj.setVisible(false);
+            logsObj.setVisible(false);
+            
+            brandName.setText("Cart");
+            homeBodyJPanel.add(cartObj);
+            cartObj.setVisible(true);
+            revalidate();
+            repaint();
+        }
+        else if(e.getSource() == billJButton){
+            dashboardObj.setVisible(false);
+            menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            orderObj.setVisible(false);
+            myOrderObj.setVisible(false);
+            staffObj.setVisible(false);
+            clientObj.setVisible(false);
+            profileObj.setVisible(false);
+            settingObj.setVisible(false);
+            logsObj.setVisible(false);
+            
+            brandName.setText("Billing");
+            homeBodyJPanel.add(billObj);
+            billObj.setVisible(true);
+            revalidate();
+            repaint();
+        }
         else if(e.getSource() == orderJButton){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             myOrderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
@@ -264,6 +318,8 @@ public class Home extends JFrame implements ActionListener{
         else if(e.getSource() == myOrderJButton){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             orderObj.setVisible(false);
             staffObj.setVisible(false);
             clientObj.setVisible(false);
@@ -280,6 +336,8 @@ public class Home extends JFrame implements ActionListener{
         else if(e.getSource() == staffJButton){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             orderObj.setVisible(false);
             myOrderObj.setVisible(false);
             clientObj.setVisible(false);
@@ -296,6 +354,8 @@ public class Home extends JFrame implements ActionListener{
         else if(e.getSource() == clientJButton){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             orderObj.setVisible(false);
             myOrderObj.setVisible(false);
             staffObj.setVisible(false);
@@ -312,6 +372,8 @@ public class Home extends JFrame implements ActionListener{
         else if(e.getSource() == profileJButton || e.getSource() == profile){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             orderObj.setVisible(false);
             myOrderObj.setVisible(false);
             staffObj.setVisible(false);
@@ -328,6 +390,8 @@ public class Home extends JFrame implements ActionListener{
         else if(e.getSource() == settingJButton){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             orderObj.setVisible(false);
             myOrderObj.setVisible(false);
             staffObj.setVisible(false);
@@ -344,6 +408,8 @@ public class Home extends JFrame implements ActionListener{
         else if(e.getSource() == logsJButton){
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             orderObj.setVisible(false);
             myOrderObj.setVisible(false);
             staffObj.setVisible(false);
@@ -361,6 +427,8 @@ public class Home extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(homeJPanel, "Encerrando sessão...");
             dashboardObj.setVisible(false);
             menuObj.setVisible(false);
+            cartObj.setVisible(false);
+            billObj.setVisible(false);
             orderObj.setVisible(false);
             myOrderObj.setVisible(false);
             staffObj.setVisible(false);

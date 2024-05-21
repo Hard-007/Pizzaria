@@ -27,7 +27,7 @@ public class Menu extends JPanel implements ActionListener{
 	JPanel menuHeaderJPanel;
 	JPanel menuBodyJPanel;
 	JPanel menuFooterJPanel;
-
+	
 	JPanel addPizzaJPanel;
 
 	ImageIcon cardImgIcon;
@@ -45,12 +45,13 @@ public class Menu extends JPanel implements ActionListener{
 	JPanel cardTopBtnsJPanel[];
 	JPanel cardBottomBtnsJPanel[];
 	JPanel cardAllBtnsJPanel[];
-
+	
 	ArrayList<String> pizzas;
 	Object[][] data;
 	int count;
+	public String code;
 	int[] getID;
-
+	
 	JButton actualizar;
 	JButton addPizza;
 
@@ -141,7 +142,7 @@ public class Menu extends JPanel implements ActionListener{
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(895, 520));
+        scrollPane.setPreferredSize(new Dimension(995, 600));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
@@ -213,7 +214,8 @@ public class Menu extends JPanel implements ActionListener{
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery("SELECT * FROM menu");
 			count=0;
-			
+			code = ((char) (new Random().nextInt(80)+65)+""+(char) (new Random().nextInt(80)+65)+""+(char) (new Random().nextInt(80)+65)+""+""+new Random().nextInt(100)+1).toUpperCase();
+
 			while(res.next()){
 				count++;
 				getID[count] = Integer.parseInt(res.getString("id"));
@@ -374,7 +376,6 @@ public class Menu extends JPanel implements ActionListener{
 					}
 					
 					String sql = "INSERT INTO pedido (id_user, codigo, nome, tamanho, preco, quantidade, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-					String code = (nomeP.substring(0, 3)+""+tamP.substring(0, 3)+""+preP.substring(0, 3)+""+new Random().nextInt(100)+1).toUpperCase();
 
 					PreparedStatement ps = null;
 					try {

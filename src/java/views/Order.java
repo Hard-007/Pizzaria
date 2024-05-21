@@ -148,7 +148,7 @@ public class Order extends JPanel implements ActionListener{
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(895, 520));
+        scrollPane.setPreferredSize(new Dimension(995, 600));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
@@ -218,7 +218,7 @@ public class Order extends JPanel implements ActionListener{
 		try {
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT pedido.id AS id, pedido.codigo as code, pedido.nome AS nomeP, pedido.tamanho AS tam, pedido.preco AS preco, pedido.quantidade AS quant, pedido.status AS stt, pedido.created_at AS crea, users.id AS id_user, users.nome AS nomeU FROM pedido JOIN users ON pedido.id_user=users.id ");
+			ResultSet res = stmt.executeQuery("SELECT * FROM pedido AS pdd JOIN users AS usr ON pdd.id_user=usr.id ");
 			
 			count=0;
 			
@@ -236,11 +236,11 @@ public class Order extends JPanel implements ActionListener{
 				cardBottomBtnsJPanel[getID[count]] = new JPanel();
 				cardAllBtnsJPanel[getID[count]] = new JPanel(new BorderLayout());
 
-				cardJLabel[getID[count]].setText("   ID: "+res.getString("id")+"\n   ID_user: "+res.getString("id_user")+"\n   Codigo: "+res.getString("code")+"\n   Nome Usuario: "+res.getString("nomeU")+"\n   Nome Pizza: "+res.getString("nomeP")+"\n   Tamanho: "+res.getString("tam")+"\n   Preco: "+res.getString("preco")+"\n   Quantidade: "+res.getString("quant")+"\n   Status: "+res.getString("stt")+"\n   Crono: "+res.getString("crea")+"\n   Total: "+(res.getInt("preco")*res.getInt("quant"))+",00 MZN");
+				cardJLabel[getID[count]].setText("   ID: "+res.getString("pdd.id")+"\n   ID_user: "+res.getString("pdd.id_user")+"\n   Codigo: "+res.getString("pdd.codigo")+"\n   Nome Usuario: "+res.getString("usr.nome")+"\n   Nome Pizza: "+res.getString("pdd.nome")+"\n   Tamanho: "+res.getString("pdd.tamanho")+"\n   Preco: "+res.getString("pdd.preco")+"00, MZN\n   Quantidade: "+res.getString("pdd.quantidade")+"\n   Status: "+res.getString("pdd.status")+"\n   Crono: "+res.getString("pdd.created_at")+"\n   Total: "+(res.getInt("pdd.preco")*res.getInt("pdd.quantidade"))+",00 MZN");
 				cardJLabel[getID[count]].setOpaque(true);
 				//cardJLabel[getID[count]].setBackground(new Color(0x444444));
 				//cardJLabel[getID[count]].setForeground(new Color(0xFFFFFF));
-				cardJLabel[getID[count]].setFont(new Font("Dialog", Font.BOLD, 14));
+				cardJLabel[getID[count]].setFont(new Font("Dialog", Font.BOLD, 13));
 				//cardJLabel[getID[count]].setHorizontalAlignment(SwingConstants.CENTER);
 				
 				cardJLabel[getID[count]].setAlignmentX(JTextArea.CENTER_ALIGNMENT);

@@ -127,7 +127,7 @@ public class Profile extends JPanel implements ActionListener{
 		try (InputStream is = Order.class.getResourceAsStream("/src/resources/assets/user.png")) {
 			if (is != null) {
 				pddcardImgIcon		= ImageIO.read(is);
-        		pddcardImgResize 	= pddcardImgIcon.getScaledInstance(200, 160, Image.SCALE_SMOOTH);
+        		pddcardImgResize 	= pddcardImgIcon.getScaledInstance(240, 240, Image.SCALE_SMOOTH);
         		pddcardImgResized	= new ImageIcon(pddcardImgResize);
 			} else {
 				System.out.println("Imagem não pôde ser encontrada.");
@@ -145,7 +145,7 @@ public class Profile extends JPanel implements ActionListener{
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(895, 520));
+        scrollPane.setPreferredSize(new Dimension(995, 600));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
@@ -232,19 +232,23 @@ public class Profile extends JPanel implements ActionListener{
 				cardBottomBtnsJPanel = new JPanel();
 				cardAllBtnsJPanel = new JPanel(new BorderLayout());
 
-				cardJLabel.setText("   ID: "+res.getString("id")+"\n   Username: "+res.getString("username")+"\n   Nome: "+res.getString("nome")+"   Apelido: "+res.getString("apelido")+"\n   Email: "+res.getString("email")+"   Contacto: "+res.getString("contacto")+"\n   Password: "+res.getString("password")+"   Categoria: "+res.getString("category")+"\n   Crono: "+res.getString("create_date"));
+				cardJLabel.setText("    ID: "+res.getString("id")+"\n    Username: "+res.getString("username")+"\n    Nome: "+res.getString("nome")+"\tApelido: "+res.getString("apelido")+"\n    Email: "+res.getString("email")+"\tContacto: "+res.getString("contacto")+"\n    Categoria: "+res.getString("category")+"\tPassword: "+res.getString("password")+"\n    Crono: "+res.getString("create_date"));
 				cardJLabel.setOpaque(true);
 				//cardJLabel.setBackground(new Color(0x444444));
 				//cardJLabel.setForeground(new Color(0xFFFFFF));
 				cardJLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 				//cardJLabel.setHorizontalAlignment(SwingConstants.CENTER);
-				
+				JPanel cardBody = new JPanel(new BorderLayout());
+                JLabel userInfo = new JLabel("   Info. do usuario");
+                userInfo.setFont(new Font("Dialog", Font.BOLD, 20));
+
 				cardJLabel.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
 				cardJLabel.setEditable(false);
         		cardJLabel.setFocusable(false);  
         		cardJLabel.setWrapStyleWord(true); 
         		cardJLabel.setLineWrap(true);
         		cardJLabel.setBorder(BorderFactory.createEmptyBorder());
+                cardJLabel.setPreferredSize(new Dimension(500, 200));
 
 				cardEditJButton.addActionListener(this);
 				cardDeleteJButton.addActionListener(this);
@@ -252,13 +256,18 @@ public class Profile extends JPanel implements ActionListener{
 				cardJPanel.setBackground(new Color(0x444444));
 				pddcardImgJLabel.setIcon(pddcardImgResized);
 
+
+                cardBody.add(userInfo, BorderLayout.CENTER);
+                cardBody.add(cardJLabel, BorderLayout.SOUTH);
+
 				cardBottomBtnsJPanel.add(cardEditJButton);
 				cardBottomBtnsJPanel.add(cardDeleteJButton);
 				cardAllBtnsJPanel.add(cardBottomBtnsJPanel, BorderLayout.SOUTH);
 				cardBottomBtnsJPanel.setBackground(new Color(0xFFFFFF));
 
+                cardJPanel.setBackground(new Color(0xFFFFFF));
 				cardJPanel.add(pddcardImgJLabel, BorderLayout.WEST);
-				cardJPanel.add(cardJLabel, BorderLayout.CENTER);
+				cardJPanel.add(cardBody, BorderLayout.CENTER);
 				cardJPanel.add(cardAllBtnsJPanel, BorderLayout.SOUTH);
 				menuBodyJPanel.add(cardJPanel);
 				revalidate();

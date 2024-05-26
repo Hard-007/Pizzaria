@@ -67,9 +67,6 @@ public class Home extends JFrame implements ActionListener{
     public static String getUser(){
         return id_user;
     }
-    
-	JButton addPizzaBtn = new JButton("Add Pizza");
-    JButton askPedido = new JButton("Ver Pedido");
 
     public Home(String accessLevel, String iduser){
         id_user = iduser;
@@ -112,7 +109,7 @@ public class Home extends JFrame implements ActionListener{
 
         dashJButton     = new JButton("Dashboard");
         menuJButton     = new JButton("Menu");
-        cartJButton     = new JButton("Carinho");
+        cartJButton     = new JButton(Cart.cartCounter+"Carinho");
         billJButton     = new JButton("Faturacao");
         orderJButton    = new JButton("Pedidos");
         myOrderJButton  = new JButton("Meus pedidos");
@@ -201,6 +198,18 @@ public class Home extends JFrame implements ActionListener{
 				}
 			}
 		});*/
+
+        Thread verificaDados = new Thread(() -> {
+			while (true) {
+				try {
+					Thread.sleep(3000); 
+                    cartJButton.setText(Cart.cartCounter+"Carinho");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		verificaDados.start();
         
     }
 

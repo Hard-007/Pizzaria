@@ -27,8 +27,6 @@ public class Profile extends JPanel implements ActionListener{
 	JPanel menuBodyJPanel;
 	JPanel menuFooterJPanel;
 
-	JPanel addPizzaJPanel;
-
 	Image pddcardImgIcon;
 	Image pddcardImgResize;
 	ImageIcon pddcardImgResized;
@@ -51,7 +49,6 @@ public class Profile extends JPanel implements ActionListener{
 	int getID;
 
 	JButton actualizar;
-	JButton addPizza;
 
 
 	JLabel nomJLabel;
@@ -147,25 +144,10 @@ public class Profile extends JPanel implements ActionListener{
 		scrollPane.setBorder(null);
         scrollPane.setPreferredSize(new Dimension(995, 600));
 
-		addPizzaJPanel = new JPanel();
-		nomJLabel = new JLabel("Nome");
-		nomJTextField = new JTextField(10);
-		tamJLabel = new JLabel("Tamanho");
-		tamJTextField = new JTextField(10);
-		precJLabel = new JLabel("Preco");
-		precJTextField = new JTextField(10);
-		catJLabel = new JLabel("Categoria");
-		catJTextField = new JTextField(10);
-		addPizzJButton = new JButton("Adicionar");
-		addPizzJButton.addActionListener(this);
-
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
 
-		//addPizza = new JButton("Adicionar");
-		//addPizza.addActionListener(this);
-
-		modalDialogHeader.add(modalDialogTitle);
+		/*modalDialogHeader.add(modalDialogTitle);
 		nomeDiv.add(nomJLabel);
 		nomeDiv.add(nomJTextField);
 		tamDiv.add(tamJLabel);
@@ -177,7 +159,7 @@ public class Profile extends JPanel implements ActionListener{
 		modalDialogBody.add(nomeDiv, constraints);
 		modalDialogBody.add(tamDiv, constraints);
 		modalDialogBody.add(precDiv, constraints);
-		modalDialogBody.add(catDiv, constraints);
+		modalDialogBody.add(catDiv, constraints);*/
 
 		// Add components to the dialog
 		modalDialog.add(modalDialogHeader, BorderLayout.NORTH);
@@ -188,7 +170,7 @@ public class Profile extends JPanel implements ActionListener{
 		
 		menuHeaderJPanel.setBackground(new Color(0x123456));
 		menuHeaderJPanel.add(actualizar);
-		//menuHeaderJPanel.add(addPizza);
+
         //menuBodyJPanel.add(scrollPane);
 
 		menuJPanel.add(menuHeaderJPanel, BorderLayout.NORTH);
@@ -282,7 +264,7 @@ public class Profile extends JPanel implements ActionListener{
 	public void rmMenuDados(){
 		for(int i = 1; i<=count; i++){
 			try{
-				cardTopBtnsJPanel.remove(cardJButton);
+				//cardTopBtnsJPanel.remove(cardJButton);
 				cardBottomBtnsJPanel.remove(cardEditJButton);
 				cardBottomBtnsJPanel.remove(cardDeleteJButton);
 				cardAllBtnsJPanel.remove(cardTopBtnsJPanel);
@@ -303,26 +285,6 @@ public class Profile extends JPanel implements ActionListener{
 		if (e.getSource() == actualizar) {
 			rmMenuDados();
 			menuDados();
-		}
-		else if(e.getSource() == addPizza){
-			JButton closeButton = new JButton("Cancelar");
-			closeButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					modalDialogFooter.remove(closeButton);
-					modalDialogFooter.remove(addPizzJButton);
-					modalDialog.dispose();
-					System.out.println("modal off");
-				}
-			});
-
-			modalDialogTitle.setText("Adicionar Pizza");
-			
-			modalDialogFooter.add(closeButton);
-			modalDialogFooter.add(addPizzJButton);
-
-			// Display the dialog
-			modalDialog.setVisible(true);
 		}
 		else if(e.getSource() == addPizzJButton){
 			System.out.println("pressed");
@@ -346,30 +308,11 @@ public class Profile extends JPanel implements ActionListener{
 			catch(SQLException ex) {
 				ex.printStackTrace();
 			}
-			JOptionPane.showMessageDialog(addPizzaJPanel, "Pizza adicionada");
+			JOptionPane.showMessageDialog(null, "Pizza adicionada");
 		}
 		else{
 			for(int i = 0; i<=count; i++){
-				if (e.getSource() == cardJButton) {
-					String Pid = ""+i;
-					String stts = "Atendido";
-				
-					String sql = "UPDATE pedido SET status = ? WHERE id = ?";
-
-					PreparedStatement ps = null;
-					try {
-						ps = DBConnection.getConexao().prepareStatement(sql);
-						ps.setString(1, stts);
-						ps.setString(2, Pid);
-						ps.execute();
-						ps.close();
-					}
-					catch(SQLException ex) {
-						ex.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido atendido");
-				}
-				else if (e.getSource() == cardEditJButton) {
+				if (e.getSource() == cardEditJButton) {
 					String Pid = ""+getID;
 					String nomeP = null;
 					String tamP = null;
@@ -417,7 +360,7 @@ public class Profile extends JPanel implements ActionListener{
 							catch(SQLException ex) {
 								ex.printStackTrace();
 							}
-							JOptionPane.showMessageDialog(addPizzaJPanel, "Item menu editado");
+							JOptionPane.showMessageDialog(null, "Item menu editado");
 						}
 					});
 					JButton closeButton = new JButton("Cancelar");
@@ -453,7 +396,7 @@ public class Profile extends JPanel implements ActionListener{
 					catch(SQLException ex) {
 						ex.printStackTrace();
 					}
-					JOptionPane.showMessageDialog(addPizzaJPanel, "Item menu excluido");
+					JOptionPane.showMessageDialog(null, "Item menu excluido");
 				}
 			}
 		}

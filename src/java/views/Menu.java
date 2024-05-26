@@ -374,26 +374,10 @@ public class Menu extends JPanel implements ActionListener{
 					catch(SQLException se){
 						
 					}
-					
-					String sql = "INSERT INTO pedido (id_user, codigo, nome, tamanho, preco, quantidade, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-					PreparedStatement ps = null;
-					try {
-						ps = DBConnection.getConexao().prepareStatement(sql);
-						ps.setString(1, Home.getUser());
-						ps.setString(2, code);
-						ps.setString(3, nomeP);
-						ps.setString(4, tamP);
-						ps.setString(5, preP);
-						ps.setString(6, Pquant);
-						ps.setString(7, stts);
-						ps.execute();
-						ps.close();
-					}
-					catch(SQLException ex) {
-						ex.printStackTrace();
-					}
+					String[] cartArr={Home.getUser(), code, nomeP, tamP, preP, Pquant, stts};
+					Cart.setCart(cartArr);
 					JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido adicionado");
+					Cart.getCart();
 				}
 				else if (e.getSource() == cardEditJButton[getID[i]]) {
 					String Pid = ""+getID[i];

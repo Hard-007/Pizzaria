@@ -31,8 +31,6 @@ public class Staff extends JPanel implements ActionListener{
 	JPanel menuBodyJPanel;
 	JPanel menuFooterJPanel;
 
-	JPanel addPizzaJPanel;
-
 	Image pddcardImgIcon;
 	Image pddcardImgResize;
 	ImageIcon pddcardImgResized;
@@ -55,7 +53,6 @@ public class Staff extends JPanel implements ActionListener{
 	int[] getID;
 
 	JButton actualizar;
-	JButton addPizza;
 
 
 	JLabel nomJLabel;
@@ -154,7 +151,6 @@ public class Staff extends JPanel implements ActionListener{
 		scrollPane.setBorder(null);
         scrollPane.setPreferredSize(new Dimension(995, 600));
 
-		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
 		nomJTextField = new JTextField(10);
 		tamJLabel = new JLabel("Tamanho");
@@ -169,8 +165,6 @@ public class Staff extends JPanel implements ActionListener{
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
 
-		//addPizza = new JButton("Adicionar");
-		//addPizza.addActionListener(this);
 
 		modalDialogHeader.add(modalDialogTitle);
 		nomeDiv.add(nomJLabel);
@@ -195,7 +189,6 @@ public class Staff extends JPanel implements ActionListener{
 		
 		menuHeaderJPanel.setBackground(new Color(0x123456));
 		menuHeaderJPanel.add(actualizar);
-		//menuHeaderJPanel.add(addPizza);
         //menuBodyJPanel.add(scrollPane);
 
 		menuJPanel.add(menuHeaderJPanel, BorderLayout.NORTH);
@@ -259,7 +252,6 @@ public class Staff extends JPanel implements ActionListener{
 				pddcardImgJLabel[getID[count]].setIcon(pddcardImgResized);
 
 				if (accessLevel.equals("user")) {
-					addPizza.setVisible(false);
 					cardBottomBtnsJPanel[getID[count]].setVisible(false);
 				}
 
@@ -305,26 +297,6 @@ public class Staff extends JPanel implements ActionListener{
 			rmMenuDados();
 			menuDados("admin");
 		}
-		else if(e.getSource() == addPizza){
-			JButton closeButton = new JButton("Cancelar");
-			closeButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					modalDialogFooter.remove(closeButton);
-					modalDialogFooter.remove(addPizzJButton);
-					modalDialog.dispose();
-					System.out.println("modal off");
-				}
-			});
-
-			modalDialogTitle.setText("Adicionar Pizza");
-			
-			modalDialogFooter.add(closeButton);
-			modalDialogFooter.add(addPizzJButton);
-
-			// Display the dialog
-			modalDialog.setVisible(true);
-		}
 		else if(e.getSource() == addPizzJButton){
 			System.out.println("pressed");
 			String no = nomJTextField.getText();
@@ -347,7 +319,7 @@ public class Staff extends JPanel implements ActionListener{
 			catch(SQLException ex) {
 				ex.printStackTrace();
 			}
-			JOptionPane.showMessageDialog(addPizzaJPanel, "Pizza adicionada");
+			JOptionPane.showMessageDialog(null, "Pizza adicionada");
 		}
 		else{
 			for(int i = 0; i<=count; i++){
@@ -399,7 +371,7 @@ public class Staff extends JPanel implements ActionListener{
 							catch(SQLException ex) {
 								ex.printStackTrace();
 							}
-							JOptionPane.showMessageDialog(addPizzaJPanel, "Item menu editado");
+							JOptionPane.showMessageDialog(null, "Item menu editado");
 						}
 					});
 					JButton closeButton = new JButton("Cancelar");
@@ -435,7 +407,7 @@ public class Staff extends JPanel implements ActionListener{
 					catch(SQLException ex) {
 						ex.printStackTrace();
 					}
-					JOptionPane.showMessageDialog(addPizzaJPanel, "Item menu excluido");
+					JOptionPane.showMessageDialog(null, "Item menu excluido");
 				}
 			}
 		}

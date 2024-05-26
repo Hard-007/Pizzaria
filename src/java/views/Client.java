@@ -31,8 +31,6 @@ public class Client extends JPanel implements ActionListener{
 	JPanel menuBodyJPanel;
 	JPanel menuFooterJPanel;
 
-	JPanel addPizzaJPanel;
-
 	Image pddcardImgIcon;
 	Image pddcardImgResize;
 	ImageIcon pddcardImgResized;
@@ -55,7 +53,6 @@ public class Client extends JPanel implements ActionListener{
 	int[] getID;
 
 	JButton actualizar;
-	JButton addPizza;
 
 
 	JLabel nomJLabel;
@@ -154,7 +151,6 @@ public class Client extends JPanel implements ActionListener{
 		scrollPane.setBorder(null);
         scrollPane.setPreferredSize(new Dimension(995, 600));
 
-		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
 		nomJTextField = new JTextField(10);
 		tamJLabel = new JLabel("Tamanho");
@@ -169,8 +165,6 @@ public class Client extends JPanel implements ActionListener{
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
 
-		//addPizza = new JButton("Adicionar");
-		//addPizza.addActionListener(this);
 
 		modalDialogHeader.add(modalDialogTitle);
 		nomeDiv.add(nomJLabel);
@@ -195,7 +189,6 @@ public class Client extends JPanel implements ActionListener{
 		
 		menuHeaderJPanel.setBackground(new Color(0x123456));
 		menuHeaderJPanel.add(actualizar);
-		//menuHeaderJPanel.add(addPizza);
         //menuBodyJPanel.add(scrollPane);
 
 		menuJPanel.add(menuHeaderJPanel, BorderLayout.NORTH);
@@ -259,12 +252,11 @@ public class Client extends JPanel implements ActionListener{
 				pddcardImgJLabel[getID[count]].setIcon(pddcardImgResized);
 
 				if (accessLevel.equals("user")) {
-					addPizza.setVisible(false);
 					cardBottomBtnsJPanel[getID[count]].setVisible(false);
 				}
 
-				cardBottomBtnsJPanel[getID[count]].add(cardEditJButton[getID[count]]);
-				cardBottomBtnsJPanel[getID[count]].add(cardDeleteJButton[getID[count]]);
+				//cardBottomBtnsJPanel[getID[count]].add(cardEditJButton[getID[count]]);
+				//cardBottomBtnsJPanel[getID[count]].add(cardDeleteJButton[getID[count]]);
 				cardAllBtnsJPanel[getID[count]].add(cardBottomBtnsJPanel[getID[count]], BorderLayout.SOUTH);
 				cardBottomBtnsJPanel[getID[count]].setBackground(new Color(0xFFFFFF));
 
@@ -307,50 +299,6 @@ public class Client extends JPanel implements ActionListener{
 		if (e.getSource() == actualizar) {
 			rmMenuDados();
 			menuDados("admin");
-		}
-		else if(e.getSource() == addPizza){
-			JButton closeButton = new JButton("Cancelar");
-			closeButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					modalDialogFooter.remove(closeButton);
-					modalDialogFooter.remove(addPizzJButton);
-					modalDialog.dispose();
-					System.out.println("modal off");
-				}
-			});
-
-			modalDialogTitle.setText("Adicionar Pizza");
-			
-			modalDialogFooter.add(closeButton);
-			modalDialogFooter.add(addPizzJButton);
-
-			// Display the dialog
-			modalDialog.setVisible(true);
-		}
-		else if(e.getSource() == addPizzJButton){
-			System.out.println("pressed");
-			String no = nomJTextField.getText();
-			String ta = tamJTextField.getText();
-			String pre = precJTextField.getText();
-			String ca = catJTextField.getText();
-
-			String sql = "INSERT INTO users (username, nome, apelido, email, contacto, category) VALUES (?, ?, ?, ?, ?, ?)";
-			
-			PreparedStatement ps = null;
-			try {
-				ps = DBConnection.getConexao().prepareStatement(sql);
-				ps.setString(1, no);
-				ps.setString(2, ta);
-				ps.setString(3, pre);
-				ps.setString(4, ca);
-				ps.execute();
-				ps.close();
-			}
-			catch(SQLException ex) {
-				ex.printStackTrace();
-			}
-			JOptionPane.showMessageDialog(addPizzaJPanel, "Pizza adicionada");
 		}
 		else{
 			for(int i = 0; i<=count; i++){
@@ -402,7 +350,7 @@ public class Client extends JPanel implements ActionListener{
 							catch(SQLException ex) {
 								ex.printStackTrace();
 							}
-							JOptionPane.showMessageDialog(addPizzaJPanel, "Item menu editado");
+							JOptionPane.showMessageDialog(null, "Item menu editado");
 						}
 					});
 					JButton closeButton = new JButton("Cancelar");
@@ -438,7 +386,7 @@ public class Client extends JPanel implements ActionListener{
 					catch(SQLException ex) {
 						ex.printStackTrace();
 					}
-					JOptionPane.showMessageDialog(addPizzaJPanel, "Item menu excluido");
+					JOptionPane.showMessageDialog(null, "Item menu excluido");
 				}
 			}
 		}

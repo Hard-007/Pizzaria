@@ -137,12 +137,12 @@ public class Menu extends JPanel implements ActionListener{
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
 		menuBodyJPanel = new JPanel(new FlowLayout());
-		menuBodyJPanel.setPreferredSize(new Dimension(830, 3000));
+		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneX(), Setting.getPaneY()));
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(995, 600));
+        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneWidth(), Setting.getScrollPaneHeight()));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
@@ -294,7 +294,6 @@ public class Menu extends JPanel implements ActionListener{
 			cardJPanel[getID[i]].remove(cardJLabel[getID[i]]);
 			cardJPanel[getID[i]].remove(cardAllBtnsJPanel[getID[i]]);
 			menuBodyJPanel.remove(cardJPanel[getID[i]]);
-			menuBodyJPanel.remove(cardJPanel[getID[i]]);
 			}catch(Exception e){
 				System.out.println("bug");
 			}
@@ -374,7 +373,7 @@ public class Menu extends JPanel implements ActionListener{
 					catch(SQLException se){
 						
 					}
-					String[] cartArr={Home.getUser(), code, nomeP, tamP, preP, Pquant, stts};
+					String[] cartArr={Pid, Home.getUser(), code, nomeP, tamP, preP, Pquant, stts};
 					Cart.setCart(cartArr);
 					JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido adicionado");
 					Cart.getCart();

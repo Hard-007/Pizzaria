@@ -84,13 +84,13 @@ public class Bill extends JPanel implements ActionListener{
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
 		menuBodyJPanel = new JPanel(new FlowLayout());
-		menuBodyJPanel.setPreferredSize(new Dimension(830, 3000));
+		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneX(), Setting.getPaneY()));
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
         menuBodyJPanel.setBackground(new Color(0xAAAAAA));
-        scrollPane.setPreferredSize(new Dimension(995, 600));
+        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneWidth(), Setting.getScrollPaneHeight()));
 
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
@@ -126,8 +126,8 @@ public class Bill extends JPanel implements ActionListener{
 			Connection conn = DBConnection.getConexao();
 			Statement stmt = conn.createStatement();
 			Statement sttmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT * FROM pedido AS pdd JOIN users AS usr ON pdd.id_user=usr.id");
-            ResultSet rescode = sttmt.executeQuery("SELECT * FROM pedido GROUP BY codigo");
+			ResultSet res = stmt.executeQuery("SELECT * FROM pedido AS pdd JOIN users AS usr ON pdd.id_user=usr.id WHERE pdd.id_user='"+Home.getUser()+"'");
+            ResultSet rescode = sttmt.executeQuery("SELECT * FROM pedido WHERE id_user='"+Home.getUser()+"' GROUP BY codigo");
 			
             count=0;
 

@@ -65,7 +65,7 @@ public class Dashboard extends JPanel implements ActionListener{
 
 		scrollPane = new JScrollPane(dashBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(995, 600));
+        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneWidth(), Setting.getScrollPaneHeight()));
 
 		dashHeaderJPanel.add(actualizar);
 		dashHeaderJPanel.setBackground(new Color(0x123456));

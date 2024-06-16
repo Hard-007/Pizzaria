@@ -74,7 +74,7 @@ public class Home extends JFrame implements ActionListener{
         setUndecorated(true);
 
         setTitle("Pizzaria");
-		setSize(1124, 720);
+		setSize(Setting.getFrameDimension());
         setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
@@ -95,11 +95,11 @@ public class Home extends JFrame implements ActionListener{
         homeJPanel        = new JPanel(new BorderLayout());
         homeHeaderJPanel  = new JPanel(new BorderLayout());
         homeBodyJPanel    = new JPanel(new BorderLayout());
-        homeLeftJPanel    = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+        homeLeftJPanel    = new JPanel(new FlowLayout(FlowLayout.TRAILING, 1, 7));
 
         logoLabel   = new JLabel();
         logoImg     = new ImageIcon("../assets/logo.jpg");
-        logoResize  = logoImg.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        logoResize  = logoImg.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         logoResized = new ImageIcon(logoResize);
         logoLabel.setIcon(logoResized);      
 
@@ -119,7 +119,7 @@ public class Home extends JFrame implements ActionListener{
         settingJButton  = new JButton("Definicoes");
         logsJButton     = new JButton("Logs");
         exitJButton     = new JButton("Logout");
-        dashJButton     .addActionListener(this);  
+        dashJButton     .addActionListener(this);
         menuJButton     .addActionListener(this);
         cartJButton     .addActionListener(this);
         billJButton     .addActionListener(this);
@@ -131,6 +131,19 @@ public class Home extends JFrame implements ActionListener{
         settingJButton  .addActionListener(this);
         logsJButton     .addActionListener(this);
         exitJButton     .addActionListener(this);
+        /*dashJButton     .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        menuJButton     .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        cartJButton     .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        billJButton     .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        orderJButton    .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        myOrderJButton  .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        staffJButton    .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        clientJButton   .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        profileJButton  .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        settingJButton  .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        logsJButton     .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));
+        exitJButton     .setPreferredSize(new Dimension(Setting.getButtonWidth(), Setting.getButtonHeight()));*/
+        homeLeftJPanel.add(Box.createHorizontalGlue());
         homeLeftJPanel.add(dashJButton);
         homeLeftJPanel.add(menuJButton);
         homeLeftJPanel.add(cartJButton);
@@ -143,21 +156,22 @@ public class Home extends JFrame implements ActionListener{
         homeLeftJPanel.add(settingJButton);
         homeLeftJPanel.add(logsJButton);
         homeLeftJPanel.add(exitJButton);
-        homeLeftJPanel.setPreferredSize(new Dimension(120, MAXIMIZED_VERT));
+        homeLeftJPanel.add(Box.createHorizontalGlue());
+        homeLeftJPanel.setPreferredSize(new Dimension(150, MAXIMIZED_VERT));
         homeLeftJPanel.setBackground(new Color(0x241e20));
 
         homeHeader();
         JPanel aside = new JPanel();
         add(aside, BorderLayout.WEST);
 
-        if (accessLevel.equals("admin")){
+        if (accessLevel.equals("Admin")){
             aside.setBackground(Color.RED);
             profile.setText("Admin");
             brandName.setText("Dashboard");
             homeBodyJPanel.add(dashboardObj);
             dashboardObj.setVisible(true);
         }
-        else if (accessLevel.equals("staff")){
+        else if (accessLevel.equals("Staff")){
             aside.setBackground(Color.YELLOW);
             profile.setText("Staff");
             brandName.setText("Dashboard");
@@ -167,7 +181,7 @@ public class Home extends JFrame implements ActionListener{
             homeBodyJPanel.add(dashboardObj);
             dashboardObj.setVisible(true);
         }
-        else if (accessLevel.equals("user")){
+        else if (accessLevel.equals("Client")){
             aside.setBackground(Color.GREEN);
             profile.setText("User");
             brandName.setText("Menu");

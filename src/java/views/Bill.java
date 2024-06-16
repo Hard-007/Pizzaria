@@ -84,13 +84,13 @@ public class Bill extends JPanel implements ActionListener{
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
 		menuBodyJPanel = new JPanel(new FlowLayout());
-		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneX(), Setting.getPaneY()));
+		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneDimension()));
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
         menuBodyJPanel.setBackground(new Color(0xAAAAAA));
-        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneWidth(), Setting.getScrollPaneHeight()));
+        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneDimension()));
 
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
@@ -112,7 +112,7 @@ public class Bill extends JPanel implements ActionListener{
 				try {
 					Thread.sleep(5000); 
 					rmMenuDados();
-					menuDados("admin");
+					menuDados("Admin");
 					//System.out.println("Refreshing Menu");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -188,7 +188,6 @@ public class Bill extends JPanel implements ActionListener{
 			conta=0;
 			while(res.next()){
 				for(int l=1; l<=count; l++){
-					System.out.println();
 					if(getCode[l].equals(res.getString("pdd.codigo"))){
 						cardJLabel[getID[l]].append("   "+res.getString("pdd.id")+"         "+res.getString("pdd.nome")+"\t"+res.getString("pdd.tamanho")+"\t"+res.getString("pdd.preco")+"\t"+res.getString("pdd.quantidade")+"\t"+res.getString("pdd.status")+"\t"+(res.getInt("pdd.preco")*res.getInt("pdd.quantidade"))+",00 MZN\n");
 					}

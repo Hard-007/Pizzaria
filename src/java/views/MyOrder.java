@@ -87,12 +87,12 @@ public class MyOrder extends JPanel implements ActionListener{
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
 		menuBodyJPanel = new JPanel(new FlowLayout());
-		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneX(), Setting.getPaneY()));
+		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneDimension()));
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneWidth(), Setting.getScrollPaneHeight()));
+        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneDimension()));
 
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
@@ -114,7 +114,7 @@ public class MyOrder extends JPanel implements ActionListener{
 				try {
 					Thread.sleep(5000); 
 					rmMenuDados();
-					menuDados("admin");
+					menuDados("Admin");
 					//System.out.println("Refreshing Menu");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -164,7 +164,7 @@ public class MyOrder extends JPanel implements ActionListener{
 				cardJPanel[getID[count]].setBackground(new Color(0x444444));
 				pddcardImgJLabel[getID[count]].setIcon(pddcardImgResized);
 
-				if (accessLevel.equals("user")) {
+				if (accessLevel.equals("Client")) {
 					cardBottomBtnsJPanel[getID[count]].setVisible(false);
 				}
 
@@ -209,7 +209,7 @@ public class MyOrder extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == actualizar) {
 			rmMenuDados();
-			menuDados("admin");
+			menuDados("Admin");
 		}
 		else{
 			for(int i = 0; i<=count; i++){

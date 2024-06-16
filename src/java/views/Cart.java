@@ -133,13 +133,13 @@ public class Cart extends JPanel implements ActionListener{
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
 		menuBodyJPanel = new JPanel(new FlowLayout());
-		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneX(), Setting.getPaneY()));
+		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneDimension()));
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
         scrollPane.setBackground(new Color(0xAAAAAA));
-        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneWidth(), Setting.getScrollPaneHeight()));
+        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneDimension()));
 
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
@@ -162,7 +162,7 @@ public class Cart extends JPanel implements ActionListener{
 				try {
 					Thread.sleep(5000); 
 					rmMenuDados();
-					menuDados("admin");
+					menuDados("Admin");
 					//System.out.println("Refreshing Menu");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -175,7 +175,7 @@ public class Cart extends JPanel implements ActionListener{
 		count=0;
 		for(int lk=0; lk < cartCounter; lk++){
 			count++;
-			if(!(cart[lk][count].equals(cart[lk][lk]))){
+			if(cart[lk][count].equals(cart[lk][lk])){
 			cardJPanel[lk] = new JPanel(new BorderLayout());
 			pddcardImgJLabel[lk] = new JLabel();
 			cardJLabel[lk] = new JTextArea();

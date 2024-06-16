@@ -137,12 +137,12 @@ public class Menu extends JPanel implements ActionListener{
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
 		menuBodyJPanel = new JPanel(new FlowLayout());
-		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneX(), Setting.getPaneY()));
+		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneDimension()));
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneWidth(), Setting.getScrollPaneHeight()));
+        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneDimension()));
 
 		addPizzaJPanel = new JPanel();
 		nomJLabel = new JLabel("Nome");
@@ -199,7 +199,7 @@ public class Menu extends JPanel implements ActionListener{
 				try {
 					Thread.sleep(5000); 
 					rmMenuDados();
-					menuDados("admin");
+					menuDados("Admin");
 					//System.out.println("Refreshing Menu");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -253,7 +253,7 @@ public class Menu extends JPanel implements ActionListener{
 				cardJPanel[getID[count]].setBackground(new Color(0x444444));
 				cardImgJLabel[getID[count]].setIcon(cardImgResized);
 
-				if (accessLevel.equals("user")) {
+				if (accessLevel.equals("Client")) {
 					addPizza.setVisible(false);
 					cardBottomBtnsJPanel[getID[count]].setVisible(false);
 				}
@@ -304,7 +304,7 @@ public class Menu extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == actualizar) {
 			rmMenuDados();
-			menuDados("admin");
+			menuDados("Admin");
 		}
 		else if(e.getSource() == addPizza){
 			JButton closeButton = new JButton("Cancelar");
@@ -373,10 +373,34 @@ public class Menu extends JPanel implements ActionListener{
 					catch(SQLException se){
 						
 					}
+
+					String sql = "INSERT INTO pedido (id_user, codigo, nome, tamanho, preco, quantidade, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+					String code = (nomeP.substring(0, 3)+""+tamP.substring(0, 3)+""+preP.substring(0, 3)+""+new Random().nextInt(100)+1).toUpperCase();
+
+					PreparedStatement ps = null;
+					try {
+						ps = DBConnection.getConexao().prepareStatement(sql);
+						ps.setString(1, Home.getUser());
+						ps.setString(2, code);
+						ps.setString(3, nomeP);
+						ps.setString(4, tamP);
+						ps.setString(5, preP);
+						ps.setString(6, Pquant);
+						ps.setString(7, stts);
+						ps.execute();
+						ps.close();
+					}
+					catch(SQLException ex) {
+						ex.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido adicionado");
+
+					/*
 					String[] cartArr={Pid, Home.getUser(), code, nomeP, tamP, preP, Pquant, stts};
 					Cart.setCart(cartArr);
 					JOptionPane.showMessageDialog(addPizzaJPanel, "Pedido adicionado");
 					Cart.getCart();
+					*/
 				}
 				else if (e.getSource() == cardEditJButton[getID[i]]) {
 					String Pid = ""+getID[i];

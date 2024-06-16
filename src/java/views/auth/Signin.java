@@ -140,19 +140,19 @@ public class Signin extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == sgButton){
-            String username = user.getText();
+            String usuario = user.getText();
             String name = nome.getText();
             String surname = apelido.getText();
             String semail = email.getText();
             String contact = contacto.getText();
             String pass = String.valueOf(password.getPassword());
 
-			String sql = "INSERT INTO users (username, nome, apelido, email, contacto, password, category) VALUES (?, ?, ?, ?, ?, ?, 'user')";
+			String sql = "INSERT INTO users (usuario, nome, apelido, email, contacto, password, category) VALUES (?, ?, ?, ?, ?, ?, 'user')";
 			
 			PreparedStatement ps = null;
 			try {
 				ps = DBConnection.getConexao().prepareStatement(sql);
-				ps.setString(1, username);
+				ps.setString(1, usuario);
 				ps.setString(2, name);
 				ps.setString(3, surname);
 				ps.setString(4, semail);

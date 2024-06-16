@@ -137,12 +137,12 @@ public class Profile extends JPanel implements ActionListener{
         menuJPanel = new JPanel(new BorderLayout());
 		menuHeaderJPanel = new JPanel();
 		menuBodyJPanel = new JPanel(new FlowLayout());
-		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneX(), Setting.getPaneY()));
+		menuBodyJPanel.setPreferredSize(new Dimension(Setting.getPaneDimension()));
 		menuFooterJPanel = new JPanel();
 
 		scrollPane = new JScrollPane(menuBodyJPanel);
 		scrollPane.setBorder(null);
-        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneWidth(), Setting.getScrollPaneHeight()));
+        scrollPane.setPreferredSize(new Dimension(Setting.getScrollPaneDimension()));
 
 		actualizar = new JButton("Actualizar");
 		actualizar.addActionListener(this);
@@ -184,7 +184,7 @@ public class Profile extends JPanel implements ActionListener{
 				try {
 					Thread.sleep(5000); 
 					rmMenuDados();
-					menuDados("admin");
+					menuDados("Admin");
 					//System.out.println("Refreshing Menu");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -214,7 +214,7 @@ public class Profile extends JPanel implements ActionListener{
 				cardBottomBtnsJPanel = new JPanel();
 				cardAllBtnsJPanel = new JPanel(new BorderLayout());
 
-				cardJLabel.setText("    ID: "+res.getString("id")+"\n    Username: "+res.getString("username")+"\n    Nome: "+res.getString("nome")+"\tApelido: "+res.getString("apelido")+"\n    Email: "+res.getString("email")+"\tContacto: "+res.getString("contacto")+"\n    Categoria: "+res.getString("category")+"\tPassword: "+res.getString("password")+"\n    Crono: "+res.getString("create_date"));
+				cardJLabel.setText("    ID: "+res.getString("id")+"\n    usuario: "+res.getString("usuario")+"\n    Nome: "+res.getString("nome")+"\tApelido: "+res.getString("apelido")+"\n    Email: "+res.getString("email")+"\tContacto: "+res.getString("contacto")+"\n    Categoria: "+res.getString("category")+"\tPassword: "+res.getString("password")+"\n    Crono: "+res.getString("created_at"));
 				cardJLabel.setOpaque(true);
 				//cardJLabel.setBackground(new Color(0x444444));
 				//cardJLabel.setForeground(new Color(0xFFFFFF));
@@ -293,7 +293,7 @@ public class Profile extends JPanel implements ActionListener{
 			String pre = precJTextField.getText();
 			String ca = catJTextField.getText();
 
-			String sql = "INSERT INTO users (username, nome, apelido, email, contacto, category) VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO users (usuario, nome, apelido, email, contacto, category) VALUES (?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement ps = null;
 			try {

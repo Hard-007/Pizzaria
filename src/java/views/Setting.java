@@ -21,26 +21,22 @@ import javax.swing.*;
 import src.resources.config.DBConnection;
 
 public class Setting extends JPanel{
-    static int buttonWidth = 50;
-    static int scrollPaneWidth = 995;
-    static int scrollPaneHeight = 600;
-    static int paneX = 830;
-    static int paneY = 4000;
+    static Dimension buttonDimension = new Dimension(100, 50);
+    static Dimension scrollPaneDimension = new Dimension(1200, 644);
+    static Dimension paneDimension = new Dimension(830, 4000);
+    static Dimension frameDimension = new Dimension(1344, 748);
 
-    public static int getButtonWidth(){
-        return buttonWidth;
+    public static Dimension getButtonDimension(){
+        return buttonDimension;
     }
-    public static int getScrollPaneWidth(){
-        return scrollPaneWidth;
+    public static Dimension getScrollPaneDimension(){
+        return scrollPaneDimension;
     }
-    public static int getScrollPaneHeight(){
-        return scrollPaneHeight;
+    public static Dimension getPaneDimension(){
+        return paneDimension;
     }
-    public static int getPaneX(){
-        return paneX;
-    }
-    public static int getPaneY(){
-        return paneY;
+    public static Dimension getFrameDimension(){
+        return frameDimension;
     }
 
 

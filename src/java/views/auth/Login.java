@@ -115,13 +115,13 @@ public class Login extends JPanel implements ActionListener{
             String name = user.getText();
 			String passwd = String.valueOf(password.getPassword());
 			int count=0;
-			String sql = "SELECT * FROM users WHERE username= ? AND password = ?";
+			String sql = "SELECT * FROM users WHERE usuario= ? AND password = ?";
 			PreparedStatement ps = null;
         	ResultSet res = null;
 			try{
 				Connection conn = DBConnection.getConexao();
 				//Statement stmt = conn.createStatement();
-				//ResultSet res = stmt.executeQuery("SELECT * FROM users WHERE username='"+name+"' AND password='"+password+"'");
+				//ResultSet res = stmt.executeQuery("SELECT * FROM users WHERE usuario='"+name+"' AND password='"+password+"'");
 				ps = conn.prepareStatement(sql);
         		ps.setString(1, name);
         		ps.setString(2, passwd);
@@ -142,14 +142,14 @@ public class Login extends JPanel implements ActionListener{
 						JOptionPane.showMessageDialog(null, "IP inacessível ");
 					}else{
 						JOptionPane.showMessageDialog(null, "Bem vindo "+UserLvl.getText());
-						if (UserLvl.getText().equals("admin")) {
+						if (UserLvl.getText().equals("Admin")) {
 							new Home(UserLvl.getText(), UserId.getText()).setVisible(true);
 						}
-						else if (UserLvl.getText().equals("staff")) {
+						else if (UserLvl.getText().equals("Staff")) {
 							//setVisible(false);
 							new Home(UserLvl.getText(), UserId.getText()).setVisible(true);
 						}
-						else if (UserLvl.getText().equals("user")) {
+						else if (UserLvl.getText().equals("Client")) {
 							//setVisible(false);
 							new Home(UserLvl.getText(), UserId.getText()).setVisible(true);
 						}

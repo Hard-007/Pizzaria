@@ -1,24 +1,12 @@
 package src.java.views.auth;
 
-import java.io.IOException;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import java.sql.*;
-import java.util.ArrayList;
 
-import java.net.*;
-import java.net.URL.*;
-
-import java.sql.*;
-
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import src.resources.config.DBConnection;
+import src.java.controllers.UserController;
+import src.java.models.User;
 
 public class Signin extends JPanel implements ActionListener{
     GridBagConstraints constraints;
@@ -140,30 +128,16 @@ public class Signin extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == sgButton){
-            String usuario = user.getText();
-            String name = nome.getText();
-            String surname = apelido.getText();
-            String semail = email.getText();
-            String contact = contacto.getText();
-            String pass = String.valueOf(password.getPassword());
+            User u = new User();
 
-			String sql = "INSERT INTO users (usuario, nome, apelido, email, contacto, password, category) VALUES (?, ?, ?, ?, ?, ?, 'user')";
-			
-			PreparedStatement ps = null;
-			try {
-				ps = DBConnection.getConexao().prepareStatement(sql);
-				ps.setString(1, usuario);
-				ps.setString(2, name);
-				ps.setString(3, surname);
-				ps.setString(4, semail);
-				ps.setString(5, contact);
-				ps.setString(6, pass);
-				ps.execute();
-				ps.close();
-			}
-			catch(SQLException ex) {
-				ex.printStackTrace();
-			}
+            u.setUsuario(user.getText());
+            u.setFirstName(nome.getText());
+            u.setLastName(apelido.getText());
+            u.setEmail(email.getText());
+            u.setContacto(contacto.getText());
+            u.setPassword(String.valueOf(password.getPassword()));
+
+            new UserController().save(u);
 			JOptionPane.showMessageDialog(signinPanel, "Cadastro sucedido, faça login");
 			
         }

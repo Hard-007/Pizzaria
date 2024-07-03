@@ -1,26 +1,13 @@
 package src.java.views;
 
-import java.io.IOException;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import java.sql.*;
-import java.util.ArrayList;
-
-import java.net.*;
-import java.net.URL.*;
-
-import java.sql.*;
-
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-import src.resources.config.DBConnection;
+import src.java.controllers.DashboardController;
 
 public class Dashboard extends JPanel implements ActionListener{
+	String dash[][] = new DashboardController().dash();
+
 	JPanel dashJPanel;
 	JPanel dashHeaderJPanel;
 	JPanel dashBodyJPanel;
@@ -129,23 +116,12 @@ public class Dashboard extends JPanel implements ActionListener{
 
 	}
 	public void dashDados(){
-		try {
-			Connection conn = DBConnection.getConexao();
-			Statement stmt = conn.createStatement();
-			ResultSet res = stmt.executeQuery("SELECT (SELECT sum(preco * quantidade) FROM pedido WHERE status='atendido') AS lucro, ( SELECT count(*) FROM menu) AS p, (SELECT count(*) FROM pedido WHERE status='pendente') AS pdp, (SELECT count(*) FROM pedido WHERE status='atendido') AS pda, (SELECT count(*) FROM users WHERE category = 'staff') AS uf, (SELECT count(*) FROM users WHERE category = 'user') AS uc");
-
-			while(res.next()){
-				nrLucro.setText("Lucro\n "+res.getInt("lucro")+",00 MZN");
-				nrPizzas.setText(" "+res.getInt("p")+" Pizzas");
-				nrPeddPendente.setText(" "+res.getInt("pdp")+" Pedido pendentes");
-				nrPeddFeito.setText(" "+res.getInt("pda")+" Pedido atendidos ");
-				nrFuncionarios.setText(" "+res.getInt("uf")+" Funcionarios");
-				nrClientes.setText(" "+res.getInt("uc")+" Clientes");
-			}
-		}
-		catch(SQLException exp) {
-			exp.printStackTrace();
-		}
+			nrLucro.setText("Lucro\n "+dash[0][0]+",00 MZN");
+			nrPizzas.setText(" "+4+" Pizzas");
+			nrPeddPendente.setText(" "+2+" Pedido pendentes");
+			nrPeddFeito.setText(" "+4+" Pedido atendidos ");
+			nrFuncionarios.setText(" "+5+" Funcionarios");
+			nrClientes.setText(" "+3+" Clientes");
 	}
 
 

@@ -45,7 +45,7 @@ public class UserController {
     }
      
     public void save(User user) {
-        String sql = "INSERT INTO users (usuario, nome, apelido, email, contacto, password, category) VALUES (?, ?, ?, ?, ?, ?, 'user')";
+        String sql = "INSERT INTO users (usuario, nome, apelido, email, contacto, password, category) VALUES (?, ?, ?, ?, ?, ?, 'Client')";
 		
 		PreparedStatement ps = null;
 		try {

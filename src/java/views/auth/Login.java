@@ -35,7 +35,7 @@ public class Login extends JPanel implements ActionListener{
     JLabel passwordLabel;
 
     JTextField user ;
-    JTextField ip   ;
+    //JTextField ip   ;
     JPasswordField password;
 
     JButton lgButton;
@@ -59,12 +59,12 @@ public class Login extends JPanel implements ActionListener{
 
         authTitle       = new JLabel("  Entrar");
         userLabel       = new JLabel("   Usuário:");
-        ipLabel         = new JLabel("             IP:");
+        // ipLabel         = new JLabel("             IP:");
         passwordLabel   = new JLabel("Password:");
 
         
         user        = new JTextField(15);
-		ip          = new JTextField(15);
+		//ip          = new JTextField(15);
         password    = new JPasswordField(15);
         lgButton    = new JButton("Submeter");
         
@@ -84,7 +84,7 @@ public class Login extends JPanel implements ActionListener{
         authTitle   .setFont(new Font("Arial", Font.BOLD, 23));
         authTitle   .setBorder(new EmptyBorder(0, 0, 25 ,0));
         user        .setPreferredSize(new Dimension(0, 30));
-        ip          .setPreferredSize(new Dimension(0, 30));
+        //ip          .setPreferredSize(new Dimension(0, 30));
         password    .setPreferredSize(new Dimension(0, 30));
         lgButton    .setFocusable(false);
         lgButton    .setBackground(new Color(0x1E90FF));
@@ -97,8 +97,8 @@ public class Login extends JPanel implements ActionListener{
         
         userDiv     .add(userLabel);
         userDiv     .add(user);
-		ipDiv       .add(ipLabel);
-		ipDiv       .add(ip);
+		//ipDiv       .add(ipLabel);
+		//ipDiv       .add(ip);
         passwordDiv .add(passwordLabel);
         passwordDiv .add(password);
         
@@ -138,7 +138,7 @@ public class Login extends JPanel implements ActionListener{
 			}
 			if (count > 0 && count <2) {
 				try {
-					if(!(InetAddress.getByName(ip.getText()).isReachable(2000))){
+					if(!(InetAddress.getLocalHost().isReachable(2000))){
 						JOptionPane.showMessageDialog(null, "IP inacessível ");
 					}else{
 						JOptionPane.showMessageDialog(null, "Bem vindo "+UserLvl.getText());
